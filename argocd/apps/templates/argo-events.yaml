@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-events
+  namespace: argocd
+spec:
+  project: infra
+  source:
+    repoURL: {{ .Values.repoUrl }}
+    path: charts/argo-events
+    targetRevision: HEAD
+    helm:
+      values: |
+        imagePullSecrets:
+          - name: docker
+        
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
