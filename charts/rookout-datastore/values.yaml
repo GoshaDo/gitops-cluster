@@ -19,7 +19,7 @@ service:
   loadBalancerIP: ''
 
 pvc:
-  storageClassName: manual
+  storageClassName: hostpath
   volumeSize: 1Gi
 
 resources:
