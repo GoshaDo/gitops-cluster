@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   storageClassName: 'manual'
   hostPath:
-    path: /tmp/workflows-volume
+    path: /Users/$(whoami)/workflows-volume
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
