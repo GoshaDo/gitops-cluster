@@ -8,7 +8,7 @@ service:
 
 ingress:
   enabled: true
-  host: ''
+  host: controller.example
   path: '/*'
   servicePort: 80
   annotations: 
