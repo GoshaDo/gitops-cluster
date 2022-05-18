@@ -1,0 +1,66 @@
+#https://github.com/argoproj/argo-events/blob/master/api/sensor.md
+#https://github.com/argoproj/argo-workflows/blob/master/examples/ci.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: flask-sensor
+  namespace: argocd
+  labels:
+    k8s-app: argo-workflows
+spec:
+  template:
+    serviceAccountName: argo-wf
+    nodeSelector:
+      k8s-app: argo-workflows
+  dependencies:
+    - name: flask-event-es
+      eventSourceName: flask-event-source
+      eventName: flaskapp
+      #can added filters to there
+  triggers:
+    - template:
+        name: flask-pipeline
+        metadata:
+        labels:
+          k8s-app: argo-workflows
+        k8s:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
+          operation: create
+          parameters: []
+            # - src:
+            #     dependencyName: bitbucket-event-es
+            #     dataKey: body.sheets
+            #   dest: spec.arguments.parameters.0.value
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: flask-pipeline-
+              spec:
+                entrypoint: flask-pipeline
+                serviceAccountName: argo-wf
+                arguments:
+                  parameters:
+                  - name: something
+                    value: "hellow world"
+                volumes:
+                - name: flask-workdir
+                  persistentVolumeClaim:
+                    claimName: workflow-efs
+                templates:
+                - name: models-pipeline
+                  dag:
+                    tasks:
+                    - name: models-repo
+                      templateRef:
+                        name: git-toolkit
+                        template: git-update-repo-ssh
+                        clusterScope: true
+                      arguments:
+                        parameters:
+                        - name: something
+                          value: "{{workflow.parameters.something}}"
+    

@@ -9,13 +9,13 @@ metadata:
     name: ingress-webook
 spec:
   rules:
-  - host: "bitbucket-webhook.shieldfis.com"
+  - host: "webhook.example.com"
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
           service:
-            name: bitbucket-event-eventsource-svc
+            name: flask-event-source-eventsource-svc
             port: 
               number: 12000

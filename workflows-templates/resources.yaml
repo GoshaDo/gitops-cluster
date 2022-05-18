@@ -40,10 +40,10 @@ rules:
   - ""
   resources:
   - secrets
-  - pods # to be reviewed!
+  - pods 
   verbs:
   - get
-  - patch # to be reviewed!
+  - patch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

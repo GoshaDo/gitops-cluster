@@ -3,7 +3,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: EventSource
 metadata:
-  name: bitbucket-event
+  name: event-source
   namespace: argocd
 spec:
   eventBusName: default
@@ -12,9 +12,9 @@ spec:
       - port: 12000
         targetPort: 12000
   webhook:
-    models2-trigger:
+    flaskapp:
       port: "12000"
-      endpoint: /models2
+      endpoint: /flaskapp
       method: POST
       # authSecret:
       #   name: argo-event-token
