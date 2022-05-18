@@ -23,5 +23,5 @@ spec:
   ports:
     - name: websocket
       protocol: TCP
-      port: 7488
+      port: 80
       targetPort: 7488
