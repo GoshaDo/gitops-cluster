@@ -9,7 +9,7 @@ spec:
     storage: 2Gi
   accessModes:
     - ReadWriteMany
-  storageClassName: manual
+  storageClassName: hostpath
   hostPath:
     path: /tmp/workflows-volume
 ---
@@ -20,7 +20,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: manual
+  storageClassName: hostpath
   resources:
     requests:
       storage: 1Gi
