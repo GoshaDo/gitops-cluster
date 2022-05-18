@@ -1259,9 +1259,9 @@ server:
     source:
       repoURL: https://github.com/GoshaDo/gitops-cluster
       targetRevision: HEAD
-      path: /argocd/apps
+      path: argocd/apps
       directory:
-        recurse: true
+        recurse: false
     destination:
       server: https://kubernetes.default.svc
       namespace: argocd
