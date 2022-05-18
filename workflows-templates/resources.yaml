@@ -8,8 +8,8 @@ spec:
   capacity:
     storage: 2Gi
   accessModes:
-    - ReadWriteOnce
-  storageClassName: manual
+    - ReadWriteMany
+  storageClassName: 'manual'
   hostPath:
     path: /tmp/workflows-volume
 ---
