@@ -1,6 +1,8 @@
 helm install --namespace argocd --create-namespace argocd ./charts/argocd
 helm install --namespace ingress-nginx --create-namespace ingress-nginx ./charts/ingress-nginx
 kubectl port-forward service/argocd-server -n argocd 8080:443
+kubectl create secret generic docker-token --from-literal=user=goshad --from-literal=password=xxxxxxxxxx -n default
+kubectl create secret generic rookout-token --from-literal=token=xxxxxxxxxx -n default
 
 sudo vim /etc/hosts >
 127.0.0.1 flask-app.example
