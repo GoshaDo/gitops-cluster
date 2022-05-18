@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: {{ .Values.repoUrl }}
     path: workflows-templates
-    targetRevision: master
+    targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: argocd

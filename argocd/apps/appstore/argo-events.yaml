@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: {{ .Values.repoUrl }}
     path: charts/argo-events
-    targetRevision: master
+    targetRevision: HEAD
     helm:
       values: |
         imagePullSecrets:

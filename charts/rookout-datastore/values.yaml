@@ -19,7 +19,7 @@ service:
   loadBalancerIP: ''
 
 pvc:
-  storageClassName: manual
+  storageClassName: ''
   volumeSize: 2Gi
 
 resources:
