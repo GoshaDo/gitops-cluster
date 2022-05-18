@@ -1,3 +1,7 @@
 helm install --namespace argocd --create-namespace argocd ./charts/argocd
 helm install --namespace ingress-nginx --create-namespace ingress-nginx ./charts/ingress-nginx
 kubectl port-forward service/argocd-server -n argocd 8080:443
+
+sudo vim /etc/hosts >
+127.0.0.1 flask-app.example
+127.0.0.1 argocd.example.com
