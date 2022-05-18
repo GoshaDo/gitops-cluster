@@ -16,4 +16,5 @@ spec:
     targetRevision: HEAD
     helm:
       values: |
-        tag: {{ .Values.flaskApp.image }}
+        image:
+          tag: {{ .Values.flaskApp.image }}
