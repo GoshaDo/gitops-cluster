@@ -10,7 +10,7 @@ ingress:
   enabled: true
   host: ''
   path: '/*'
-  servicePort: 7488
+  servicePort: 8080
   annotations: 
     kubernetes.io/ingress.class: "nginx"
 
