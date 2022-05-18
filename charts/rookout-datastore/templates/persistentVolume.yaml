@@ -4,6 +4,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: rookout-data-on-prem-pvc
 spec:
+  hostPath:
+    path: /tmp/rookout
   storageClassName: {{ .Values.pvc.storageClassName }}
   accessModes:
     - ReadWriteOnce
