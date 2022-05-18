@@ -7,11 +7,12 @@ service:
   type: ClusterIP
 
 ingress:
-  enabled: False
+  enabled: true
   host: ''
   path: '/*'
   servicePort: 7488
-  annotations: {}
+  annotations: 
+    kubernetes.io/ingress.class: "nginx"
 
 controller:
   serverMode: "PLAIN"
