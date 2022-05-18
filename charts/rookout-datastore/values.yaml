@@ -20,7 +20,7 @@ service:
 
 pvc:
   storageClassName: ''
-  volumeSize: 2Gi
+  volumeSize: 1Gi
 
 resources:
   requests:
