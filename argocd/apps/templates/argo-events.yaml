@@ -4,7 +4,7 @@ metadata:
   name: argo-events
   namespace: argocd
 spec:
-  project: infra
+  project: default
   source:
     repoURL: {{ .Values.repoUrl }}
     path: charts/argo-events
