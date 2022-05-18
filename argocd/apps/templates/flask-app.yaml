@@ -14,3 +14,6 @@ spec:
     path: charts/flask-app
     repoURL: {{ .Values.repoUrl }}
     targetRevision: HEAD
+    helm:
+      values: |
+        tag: {{ .Values.flaskApp.image }}
