@@ -3,7 +3,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: EventSource
 metadata:
-  name: event-source
+  name: flask-event-source
   namespace: argocd
 spec:
   eventBusName: default

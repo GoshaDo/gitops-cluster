@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rookout-controller
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: charts/rookout-controller
+    repoURL: https://github.com/GoshaDo/gitops-cluster
+    targetRevision: HEAD
