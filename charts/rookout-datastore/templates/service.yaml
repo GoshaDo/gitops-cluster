@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "datastore.fullname" . }}
+{{- if .Values.service.annotations }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 8 }}
+{{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  {{- if ((index .Values.service.loadBalancerIP)) }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end }}
+  selector:
+    product: {{ template "datastore.name" . }}  
+  ports:
+    {{- if (eq (required "datastore.serverMode is required" .Values.datastore.serverMode) "AUTOTLS") }} # AUTOTLS mode requires port 80 for communicating with LetsEncrypt
+    - protocol: TCP
+      port: 80
+      targetPort: {{ default 9090 .Values.datastore.letsEncryptContainerPort }}
+      name: {{ printf "%s-lets-encrypt" (include "datastore.name" .) }}
+    {{ end }}
+    {{- if or (eq (required "datastore.serverMode is required" .Values.datastore.serverMode) "TLS") (eq .Values.datastore.serverMode "AUTOTLS") }}
+    - protocol: TCP
+      port: 443
+      name: {{ printf "%s-https" (include "datastore.name" .) }}
+      targetPort: {{ default 8080 .Values.datastore.dopContainerPort }}
+    {{- else }}
+    - protocol: TCP
+      port: {{ default 80 .Values.datastore.servicePort }}
+      name: {{ printf "%s-http" (include "datastore.name" .) }}
+      targetPort: {{ default 8080 .Values.datastore.dopContainerPort }}
+  {{- end }}

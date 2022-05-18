@@ -1,0 +1,54 @@
+image:
+  repository: rookout/controller
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: False
+  host: ''
+  path: '/*'
+  servicePort: 7488
+  annotations: {}
+
+controller:
+  serverMode: "PLAIN"
+  listenAll: False
+  port: 7488
+  token: ''
+
+  ### Optional way of setting the Organization Token from a pre-existing secret
+  # tokenFromSecret:
+  #   name: rookout
+  #   key: token
+
+  ## rookout-agent resource requests and limits
+  ##
+  resources:
+    requests:
+      cpu: 30m
+      memory: 32Mi
+    limits:
+      cpu: 4000m
+      memory: 1024Mi
+    ## rookout-agent internal resource limiter limits
+    ## CPU must always be integers (1, 2, 3, 4, etc...)
+    ## MEMORY must always be an integer representing memory in Mb (512, 1024, 1536, etc...)
+    ##
+    ## *IMPORTANT* These values should match the kubernetes resources limits. Internal minimum limit of cpu is `1`
+    ##
+  internalResources:
+    limits:
+      cpu: "4"
+      memory: "1024"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+replicaCount: 1
+
+serviceAccount: {}

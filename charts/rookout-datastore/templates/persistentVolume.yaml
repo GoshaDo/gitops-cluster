@@ -1,0 +1,13 @@
+{{- if or (eq (default false .Values.datastore.inMemoryDb) false) (eq .Values.datastore.serverMode "AUTOTLS") }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rookout-data-on-prem-pvc
+spec:
+  storageClassName: {{ .Values.pvc.storageClassName }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pvc.volumeSize }}
+{{- end }}
