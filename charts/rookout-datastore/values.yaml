@@ -11,6 +11,10 @@ datastore:
   autoTlsDomain: ''
   tlsKeySecretName: ''
   tlsCertificateConfigmapName: ''
+  token:
+    tokenFromSecret:
+      name: rookout-token
+      key: token
   logging:
     enabled: false
   

@@ -18,7 +18,7 @@ controller:
   serverMode: "PLAIN"
   listenAll: False
   port: 7488
-  token: ''
+  # token: ''
 
   ### Optional way of setting the Organization Token from a pre-existing secret
   tokenFromSecret:
