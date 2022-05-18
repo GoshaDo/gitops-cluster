@@ -1059,7 +1059,7 @@ server:
     ## Hostnames must be provided if Ingress is enabled.
     ## Secrets must be manually created in the namespace
     hosts:
-      [argocd.example.com]
+      [argocd.example]
       # - argocd.example.com
 
     # -- List of ingress paths

@@ -1,0 +1,173 @@
+#https://github.com/argoproj/argo-events/blob/master/api/sensor.md
+#https://github.com/argoproj/argo-workflows/blob/master/examples/ci.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: models-sensor
+  namespace: argocd
+  labels:
+    k8s-app: argo-workflows
+spec:
+  template:
+    serviceAccountName: argo-wf
+    nodeSelector:
+      k8s-app: argo-workflows
+  dependencies:
+    - name: bitbucket-event-es
+      eventSourceName: bitbucket-event
+      eventName: models2-trigger
+      #can added filters to there
+  triggers:
+    - template:
+        name: models-push-pipeline
+        metadata:
+        labels:
+          k8s-app: argo-workflows
+        # conditions: "bitbucket-event-es"
+        k8s:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
+          operation: create
+          parameters:
+            - src:
+                dependencyName: bitbucket-event-es
+                dataKey: body.sheets
+              dest: spec.arguments.parameters.0.value
+            - src:
+                dependencyName: bitbucket-event-es
+                dataKey: body.all_dataset
+              dest: spec.arguments.parameters.1.value
+            - src:
+                dependencyName: bitbucket-event-es
+                dataKey: body.sanity_dataset
+              dest: spec.arguments.parameters.2.value
+            - src:
+                dependencyName: bitbucket-event-es
+                dataKey: body.tat_image
+              dest: spec.arguments.parameters.3.value
+            # - src:
+            #     dependencyName: bitbucket-event-es
+            #     dataKey: body.git_revision
+            #   dest: spec.arguments.parameters.4.value
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: models-pipeline-
+              spec:
+                entrypoint: models-pipeline
+                serviceAccountName: argo-wf
+                arguments:
+                  parameters:
+                  - name: sheets
+                    value: |
+                      [
+                        "ConversationInit",
+                        "ENTITIES"
+                      ]
+                  - name: all_dataset
+                    value: automation-test-cases-table_ALL.xlsx
+                  - name: sanity_dataset
+                    value: automation-test-cases-table_SANITY.xlsx
+                  - name: tat_image
+                    value: 882837952266.dkr.ecr.eu-west-1.amazonaws.com/models-base:Spacy3_Tested
+                  - name: git_revision
+                    value: HEAD
+                  - name: git_repo
+                    value: git@bitbucket.org:shielddev/
+                  - name: ssh_key_secret_name
+                    value: git-creds
+                  - name: working_directory
+                    value: models-workdir
+                  - name: git_user
+                    value: automation
+                  - name: git_email
+                    value: atomation@shieldfc.com
+                  - name: repo_list
+                    value: |
+                      [
+                        "models2",
+                        "categorizers",
+                        "companymatcher",
+                        "fasttext",
+                        "nltk",
+                        "polyglot",
+                        "spacy",
+                        "stanza",
+                        "python-master-server-auth"
+                      ]
+                  - name: sanity_sheet
+                    value: ""
+                volumes:
+                - name: models-workdir
+                  persistentVolumeClaim:
+                    claimName: workflow-efs
+                - name: git-creds
+                  secret:
+                    secretName: git-creds
+                    defaultMode: 0400
+                imagePullSecrets:
+                  - name: docker
+                templates:
+                - name: models-pipeline
+                  dag:
+                    tasks:
+                    - name: models-repo
+                      templateRef:
+                        name: git-toolkit
+                        template: git-update-repo-ssh
+                        clusterScope: true
+                      arguments:
+                        parameters:
+                        - name: git_repo
+                          value: "{{workflow.parameters.git_repo}}/{{item}}"
+                        - name: git_revision
+                          value: "{{workflow.parameters.git_revision}}"
+                        - name: ssh_key_secret_name
+                          value: "{{workflow.parameters.ssh_key_secret_name}}"
+                        - name: working_directory
+                          value: "{{workflow.parameters.working_directory}}"
+                        - name: git_user
+                          value: "{{workflow.parameters.git_user}}"
+                        - name: git_email
+                          value: "{{workflow.parameters.git_email}}"
+                        - name: remove_list
+                          value: ""
+                        - name: repository_name
+                          value: "{{item}}"
+                      withParam: "{{workflow.parameters.repo_list}}" 
+                    - name: tat-sanity
+                      templateRef:
+                        name: models-templates
+                        template: tat-run
+                        clusterScope: true
+                      arguments:
+                        parameters:
+                        - name: working_directory
+                          value: "{{workflow.parameters.working_directory}}"
+                        - name: dataset_test
+                          value: "{{workflow.parameters.sanity_dataset}}"
+                        - name: tat_image
+                          value: "{{workflow.parameters.tat_image}}"
+                        - name: sheet_name
+                          value: "{{workflow.parameters.sanity_sheet}}"
+                      depends: "models-repo"
+                    - name: tat-run-step
+                      templateRef:
+                        name: models-templates
+                        template: tat-run
+                        clusterScope: true
+                      arguments:
+                        parameters:
+                        - name: working_directory
+                          value: "{{workflow.parameters.working_directory}}"
+                        - name: dataset_test
+                          value: "{{workflow.parameters.all_dataset}}"
+                        - name: tat_image
+                          value: "{{workflow.parameters.tat_image}}"
+                        - name: sheet_name
+                          value: "{{item}}"
+                      withParam: "{{workflow.parameters.sheets}}" 
+                      depends: "tat-sanity"

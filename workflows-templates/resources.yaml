@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: workflow-efs
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: argo-wf
+  namespace: argocd
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argo-wf-clusterrole
+rules:
+- apiGroups: ["argoproj.io"]
+  resources:
+  - workflows
+  - workflows/finalizers
+  - applications
+  - appprojects
+  verbs:
+  - get
+  - list
+  - watch
+  - update
+  - patch
+  - delete
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - pods # to be reviewed!
+  verbs:
+  - get
+  - patch # to be reviewed!
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: argo-wf-global
+subjects:
+- kind: ServiceAccount
+  name: argo-wf
+  namespace: argocd
+roleRef: 
+  kind: ClusterRole
+  name: argo-wf-clusterrole
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,59 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterWorkflowTemplate
+metadata:
+  name: common-toolkit
+spec:
+  arguments:
+    parameters:
+    - name: wokring_directory
+      value: "{{workflow.parameters.wokring_directory}}"
+    - name: file_list
+      value: "{{workflow.parameters.file_list}}"
+  templates:
+  - name: clean-workdir
+    nodeSelector:
+        k8s-app: argo-workflows
+    inputs:
+      parameters:
+      - name: working_directory
+      - name: file_list
+    script:
+      image: alpine:latest
+      workingDir: /{{inputs.parameters.working_directory}}/
+      volumeMounts:
+      - name: '{{inputs.parameters.working_directory}}'
+        mountPath: /{{inputs.parameters.working_directory}}
+      command: [sh]
+      source: |
+        rm -rf "{{inputs.parameters.file_list}}"
+  - name: is-empty
+    metadata:
+      labels:
+        k8s-app: argo-workflows
+    nodeSelector:
+      k8s-app: argo-workflows
+    inputs:
+      parameters:
+      - name: working_directory
+      - name: repository_name
+    script:
+      image: alpine:latest
+      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repository_name}}/
+      volumeMounts:
+      - name: '{{inputs.parameters.working_directory}}'
+        mountPath: /{{inputs.parameters.working_directory}}
+      command: [sh]
+      source: |
+        NUM_FILES=$(ls -alt| wc -l| awk '{print $1-3}')
+        echo $NUM_FILES
+
+  - name: echo-something
+    inputs:
+      parameters:
+      - name: something
+    script:
+      image: alpine:latest
+      command: [sh]
+      source: |
+        echo {{inputs.parameters.something}}

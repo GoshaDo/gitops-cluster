@@ -12,5 +12,5 @@ spec:
   project: default
   source:
     path: charts/rookout-datastore
-    repoURL: https://github.com/GoshaDo/gitops-cluster
+    repoURL: {{ .Values.repoUrl }}
     targetRevision: HEAD
