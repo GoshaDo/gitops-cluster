@@ -19,7 +19,7 @@ datastore:
     enabled: false
   
 service:
-  type: LoadBalancer
+  type: ClusterIP
   loadBalancerIP: ''
 
 pvc:
