@@ -11,6 +11,6 @@ spec:
     server: 'https://kubernetes.default.svc'
   project: default
   source:
-    path: charts/flaskapp
+    path: charts/flask-app
     repoURL: https://github.com/GoshaDo/gitops-cluster
     targetRevision: HEAD
