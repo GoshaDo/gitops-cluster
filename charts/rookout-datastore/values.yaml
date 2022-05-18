@@ -44,7 +44,7 @@ serviceAccount: {}
 
 ingress:
   enabled: true
-  host: controller.example
+  host: datastore.example
   path: '/'
   servicePort: 8080
   annotations: 
