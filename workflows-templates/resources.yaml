@@ -5,6 +5,10 @@ metadata:
   name: workflows-volume
   namespace: argocd
 spec:
+  capacity:
+    storage: 100M
+  accessModes:
+    - ReadWriteOnce
   storageClassName: manual
   hostPath:
     path: /tmp/workflows-volume
@@ -19,7 +23,7 @@ spec:
   storageClassName: manual
   resources:
     requests:
-      storage: 5Gi
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: ServiceAccount
