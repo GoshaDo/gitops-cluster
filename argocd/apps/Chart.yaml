@@ -1,6 +1,6 @@
 apiVersion: v2
-name: envirnoment
-description: Shield environment components
+name: applications
+description: none
 
 # A chart can be either an 'application' or a 'library' chart.
 #
