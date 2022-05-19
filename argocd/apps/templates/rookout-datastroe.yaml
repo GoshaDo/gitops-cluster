@@ -14,3 +14,6 @@ spec:
     path: charts/rookout-datastore
     repoURL: https://github.com/GoshaDo/gitops-cluster
     targetRevision: HEAD
+    helm:
+      values: |
+        hostAliases: {{ .Values.hostAliases }}
