@@ -7,3 +7,12 @@ kubectl create secret generic rookout-token --from-literal=token=xxxxxxxxxx -n d
 sudo vim /etc/hosts >
 127.0.0.1 flask-app.example
 127.0.0.1 argocd.example.com
+
+openssl req \
+-x509 -newkey rsa:4096 -sha256 -nodes \
+-keyout tls.key -out tls.crt \
+-subj "/CN=flask-app.example" -days 365
+
+kubectl create secret tls ingress-local-tls \
+  --cert=tls.crt \
+  --key=tls.key
