@@ -15,7 +15,6 @@ ingress:
     kubernetes.io/ingress.class: "nginx"
 
 controller:
-  proxy: localhost
   serverMode: "PLAIN"
   listenAll: False
   port: 7488
