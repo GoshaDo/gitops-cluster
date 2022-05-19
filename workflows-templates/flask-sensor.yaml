@@ -10,8 +10,6 @@ metadata:
 spec:
   template:
     serviceAccountName: argo-wf
-    nodeSelector:
-      k8s-app: argo-workflows
   dependencies:
     - name: flask-event-es
       eventSourceName: flask-event-source
