@@ -16,4 +16,7 @@ spec:
     targetRevision: HEAD
     helm:
       values: |
-        hostAliases: {{ .Values.hostAliases }}
+        {{- with .Values.hostAliases }}
+        hostAliases:
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
