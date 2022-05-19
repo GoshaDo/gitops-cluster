@@ -24,7 +24,7 @@ service:
 
 pvc:
   storageClassName: hostpath
-  volumeSize: 2Gi
+  volumeSize: 1Gi
 
 resources:
   requests:
