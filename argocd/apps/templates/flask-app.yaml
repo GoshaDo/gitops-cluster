@@ -18,3 +18,13 @@ spec:
       values: |
         image:
           tag: {{ .Values.flaskApp.image }}
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: nginx
+            kubernetes.io/tls-acme: "false"
+          host:
+            - host: flask-app.example
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
