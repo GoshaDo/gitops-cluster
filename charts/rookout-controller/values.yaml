@@ -1,4 +1,3 @@
-hostAliases:
 image:
   repository: rookout/controller
   tag: latest

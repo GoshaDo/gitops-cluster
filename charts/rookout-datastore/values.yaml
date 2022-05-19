@@ -1,7 +1,6 @@
 # Default values for datastore.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-hostAliases:
 image:
   repository: rookout/data-on-prem
   pullPolicy: Always
