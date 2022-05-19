@@ -1,6 +1,7 @@
 # Default values for datastore.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+
 image:
   repository: rookout/data-on-prem
   pullPolicy: Always
@@ -23,7 +24,7 @@ service:
 
 pvc:
   storageClassName: hostpath
-  volumeSize: 1Gi
+  volumeSize: 2Gi
 
 resources:
   requests:
