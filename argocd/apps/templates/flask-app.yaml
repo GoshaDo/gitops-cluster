@@ -28,7 +28,4 @@ spec:
               paths:
                 - path: /
                   pathType: ImplementationSpecific
-          tls:
-            - hosts:
-              - flask-app.example
-              secretName: ingress-local-tls  
+                  
