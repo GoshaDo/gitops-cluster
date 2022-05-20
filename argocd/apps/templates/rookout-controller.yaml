@@ -14,6 +14,7 @@ spec:
     path: charts/rookout-controller
     repoURL: https://github.com/GoshaDo/gitops-cluster
     targetRevision: HEAD
-    helm:
-      values: |
-        hostAliases: {{ .Values.hostAliases }}
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
