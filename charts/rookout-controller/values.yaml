@@ -7,12 +7,11 @@ service:
   type: ClusterIP
 
 ingress:
-  enabled: true
-  host: controller.example
-  path: '/'
+  enabled: False
+  host: ''
+  path: '/*'
   servicePort: 7488
-  annotations: 
-    kubernetes.io/ingress.class: "nginx"
+  annotations: {}
 
 controller:
   serverMode: "PLAIN"
@@ -22,7 +21,7 @@ controller:
 
   ### Optional way of setting the Organization Token from a pre-existing secret
   tokenFromSecret:
-    name: rookout-token
+    name: rookout
     key: token
 
   ## rookout-agent resource requests and limits
