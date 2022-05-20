@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webapp
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: charts/webapp
+    repoURL: {{ .Values.repoUrl }}
+    targetRevision: HEAD
+    helm:
+      values: |
+        image:
+          tag: {{ .Values.webapp.image }}
+        ingress:
+          enabled: true
+          annotations:
+            kubernetes.io/ingress.class: nginx
+          hosts:
+            - host: webapp.example
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific

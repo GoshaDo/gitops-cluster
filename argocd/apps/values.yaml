@@ -1,6 +1,8 @@
 repoUrl: https://github.com/GoshaDo/gitops-cluster
 flaskApp:
   image: vtest-6
+webapp:
+  image: vtest-0
 
 # hostAliases:
 # - ip: "127.0.0.1"
