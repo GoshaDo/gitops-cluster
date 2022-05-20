@@ -21,8 +21,8 @@ controller:
 
   ### Optional way of setting the Organization Token from a pre-existing secret
   tokenFromSecret:
-    name: rookout
-    key: token
+    name: 
+    key: 
 
   ## rookout-agent resource requests and limits
   ##
