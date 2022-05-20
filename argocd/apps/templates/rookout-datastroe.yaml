@@ -31,9 +31,7 @@ spec:
         service:
           type: ClusterIP
         pvc:
-          storageClassName: hostpath
-
-      
+          storageClassName: hostpath      
   syncPolicy:
     automated:
       selfHeal: true
