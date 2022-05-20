@@ -4,8 +4,8 @@ flaskApp:
 webapp:
   image: vtest-2
 
-# hostAliases:
-# - ip: "127.0.0.1"
-#   hostnames:
-#   - "controller.example"
-#   - "datastore.example"
+hostAliases:
+- ip: "127.0.0.1"
+  hostnames:
+  - "controller.example"
+  - "datastore.example"
