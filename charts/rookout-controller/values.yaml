@@ -16,7 +16,7 @@ ingress:
 
 controller:
   serverMode: "PLAIN"
-  listenAll: True
+  listenAll: False
   port: 7488
   # token: ''
 
