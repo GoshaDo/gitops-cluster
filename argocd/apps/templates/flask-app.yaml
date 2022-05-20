@@ -22,7 +22,6 @@ spec:
           enabled: true
           annotations:
             kubernetes.io/ingress.class: nginx
-            kubernetes.io/tls-acme: "false"
           hosts:
             - host: flask-app.example
               paths:
@@ -31,4 +30,3 @@ spec:
           tls:
             - hosts:
               - flask-app.example
-              secretName: ingress-local-tls  
