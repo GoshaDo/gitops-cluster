@@ -14,8 +14,24 @@ spec:
     path: charts/rookout-datastore
     repoURL: https://github.com/GoshaDo/gitops-cluster
     targetRevision: HEAD
-    # helm:
-    #   values: |
+    helm:
+      values: |
+        ingress:
+          enabled: true
+          host: datastore.example
+          path: '/'
+          servicePort: 8080
+          annotations: 
+            kubernetes.io/ingress.class: "nginx"
+        datastore:
+          token:
+            tokenFromSecret:
+              name: rookout-token
+              key: token
+        service:
+          type: ClusterIP
+        pvc:
+          storageClassName: hostpath
 
       
   syncPolicy:
