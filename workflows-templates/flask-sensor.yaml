@@ -17,7 +17,7 @@ spec:
       #can added filters to there
   triggers:
     - template:
-        name: flask-pipeline
+        name: flask-push-pipeline
         metadata:
         labels:
           k8s-app: argo-workflows
@@ -44,15 +44,23 @@ spec:
                   parameters:
                   - name: something
                     value: "hellow world"
+                  - name: working_directory
+                    value: flaskapp-workdir
+                  - name: git_repo
+                    value: git@github.com:GoshaDo/BestFW.git
+                  # - name: git-creds
+                  #   secret:
+                  #     secretName: git-creds
+                  #     defaultMode: 0400
                 volumes:
                 - name: flask-workdir
                   persistentVolumeClaim:
                     claimName: workflow-pvc
                 templates:
-                - name: models-pipeline
+                - name: flask-pipeline
                   dag:
                     tasks:
-                    - name: models-repo
+                    - name: flask-repo
                       templateRef:
                         name: git-toolkit
                         template: git-update-repo-ssh

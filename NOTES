@@ -19,5 +19,8 @@ kubectl create secret tls ingress-local-tls \
 
 
 #Workflows:
+
+kubectl create secret generic git-creds --from-file=ssh-private-key=/Users/gosha/.ssh/github -n argocd
+
 # expose localhost
 ngrok http 4567
