@@ -42,4 +42,13 @@ ROOKOUT_CONTROLLER_PORT: 7488 us the websockt
 
 ROOKOUT_REMOTE_ORIGIN: each application with it's remote git repo.
 
+# Flask webapplications
+I will use to webapplication. 
+
+flask-app: https://github.com/GoshaDo/BestFW
+
+webapp: The dockerfile edited and the repo wasn't forked, those changes was performed to support arm64 chip. base image have been changed to python:3.8-slim and "apt-get install g++ -y " step added. repo: https://github.com/Rookout/tutorial-python
+
+
+
 
