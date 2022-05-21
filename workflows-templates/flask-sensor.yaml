@@ -38,9 +38,6 @@ spec:
               metadata:
                 generateName: flask-pipeline-
               spec:
-                retryStrategy:
-                  retryPolicy: OnError
-                  limit: 1
                 entrypoint: flask-pipeline
                 serviceAccountName: argo-wf
                 arguments:
