@@ -39,7 +39,7 @@ spec:
       - name: working_directory
       - name: repo_name
     container:
-      image: gcr.io/kaniko-project/executor:v1.0.0
+      image: gcr.io/kaniko-project/executor
       command: [/kaniko/executor]
       args:
       - --dockerfile=Dockerfile
