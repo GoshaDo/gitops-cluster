@@ -36,4 +36,4 @@ spec:
           - name: ROOKOUT_CONTROLLER_HOST
             value: "ws://rookout-controller.argocd.svc.cluster.local"
           - name: ROOKOUT_CONTROLLER_PORT
-            value: 7488
+            value: "7488"
