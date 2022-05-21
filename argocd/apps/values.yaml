@@ -1,8 +1,12 @@
 repoUrl: https://github.com/GoshaDo/gitops-cluster
 flaskApp:
   image: vtest-8
+  remoteOrigin: "https://github.com/omriez/BestFW.git"
+  remoteCommit: "HEAD"
 webapp:
   image: vtest-6
+  remoteOrigin: "https://github.com/Rookout/tutorial-python.git"
+  remoteCommit: "HEAD"
 
 # hostAliases:
 # - ip: "127.0.0.1"
