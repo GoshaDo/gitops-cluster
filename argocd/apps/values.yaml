@@ -13,4 +13,4 @@ webapp:
 rookout:
   controller:
     host: "ws://rookout-controller.argocd.svc.cluster.local"
-    port: 7488
+    port: "7488"
