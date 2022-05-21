@@ -99,8 +99,6 @@ spec:
               value: "{{inputs.parameters.git_repo}}"
             - name: repo_name
               value: "{{inputs.parameters.repo_name}}"
-            - name: ssh_key_secret_name
-              value: "{{inputs.parameters.ssh_key_secret_name}}"
         - name: git-clone
           templateRef:
             name: git-toolkit
@@ -132,6 +130,8 @@ spec:
               value: "{{inputs.parameters.repo_name}}"
             - name: working_directory
               value: "{{inputs.parameters.working_directory}}"
+            - name: ssh_key_secret_name
+              value: "{{inputs.parameters.ssh_key_secret_name}}"
           dependencies:
           - check-empty
           when: "{{tasks.check-empty.outputs.result}} != 0"
