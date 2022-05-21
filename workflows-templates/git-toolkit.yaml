@@ -72,7 +72,6 @@ spec:
         ls -alt
         git config --global --add safe.directory $(pwd)
         git pull '{{inputs.parameters.git_repo}}'
-        rm -rf '{{inputs.parameters.remove_list}}'
       env:
       - name: GIT_SSH_COMMAND
         value: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
