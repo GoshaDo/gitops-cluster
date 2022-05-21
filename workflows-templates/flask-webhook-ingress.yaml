@@ -9,7 +9,7 @@ metadata:
     name: ingress-webook
 spec:
   rules:
-  - host: "a5bc-62-90-128-50.eu.ngrok.io"
+  - host: "localhost"
     http:
       paths:
       - pathType: Prefix
