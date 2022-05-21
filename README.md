@@ -11,12 +11,19 @@ cert-manager deployet for auto self-signed certificates.
 External DNS server will not be used. all domains will be configurated locally in /etc/host and resloved to localhost. by the domain ngnix controller will route to the right service using ingress.
 
 Domains:
+
 webhook.example - used to trigger argoWorkflow in /flaskapp .
+
 webapp.example - rookout's flask application.
+
 datastore.example - external domain for datastore componenet.
+
 controller.example - external domain for controller.
+
 argowf.example - argoWorkflow UI.
+
 flask-app.example - my flask application.
+
 argocd.example - argoCD UI.
 
 # Rookout
@@ -26,9 +33,13 @@ For using rookout localy, we will use ETL conroller and datastore. only metadata
 
 
 Each of flask webapps intiating connection to rookout's ETL controller using SDK. for that purpose the container will be injected with enviorment variables which the process expect. the veriables are: 
+
 ROOKOUT_TOKEN: value manual pre-injected secret (rookout-token) to argocd namespace (key token)
+
 ROOKOUT_CONTROLLER_HOST: ws://rookout-controller.argocd.svc.cluster.local
+
 ROOKOUT_CONTROLLER_PORT: 7488 us the websockt 
+
 ROOKOUT_REMOTE_ORIGIN: each application with it's remote git repo.
 
 
