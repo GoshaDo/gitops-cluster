@@ -51,6 +51,14 @@ webapp: The dockerfile edited and the repo wasn't forked, those changes was perf
 
 
 # CI/CD
+We will use argo stack, ArgoEvents, ArgoWorkflows, ArgoCD.
+ArgoEvents will detect and store webhook requests to preconfigured domain and path.
+ArgoWorkflows will use sensor to watch for sutied event and trigger workflow (pipeline).
+
+The pipline will clone or pull the repo and build new image using kaniko (We want to avoud mapping docker stock due to security issues) then delivery the new image and the tag to dockerhub. the workflow will automaticly update this repo tag value at /argocd/app/values.yaml. Then argoCD will auto-sync with the envriorment.
+
+<img src="https://github.com/GoshaDo/gitops-cluster/blob/main/images/CICD.png" width="852" height="361">
+
 
 # Deployment manual:
 
