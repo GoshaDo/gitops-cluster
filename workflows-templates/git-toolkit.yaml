@@ -15,8 +15,6 @@ spec:
   templates:
 ##########################git-clone-ssh##########################
   - name: git-clone-ssh
-    nodeSelector:
-      k8s-app: argo-workflows
     inputs:
       parameters:
       - name: git_repo
@@ -46,8 +44,6 @@ spec:
 
 ##########################git-pull-ssh##########################
   - name: git-pull-ssh
-    nodeSelector:
-      k8s-app: argo-workflows
     inputs:
       parameters:
       - name: git_repo
@@ -78,8 +74,6 @@ spec:
 
 ##########################git-update-repo-ssh##########################
   - name: git-update-repo-ssh
-    nodeSelector:
-      k8s-app: argo-workflows
     inputs:
       parameters:
         - name: git_repo
