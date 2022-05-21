@@ -12,8 +12,6 @@ spec:
       value: "{{workflow.parameters.file_list}}"
   templates:
   - name: clean-workdir
-    nodeSelector:
-        k8s-app: argo-workflows
     inputs:
       parameters:
       - name: working_directory
@@ -31,8 +29,6 @@ spec:
     metadata:
       labels:
         k8s-app: argo-workflows
-    nodeSelector:
-      k8s-app: argo-workflows
     inputs:
       parameters:
       - name: working_directory
