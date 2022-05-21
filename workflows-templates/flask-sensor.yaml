@@ -49,7 +49,7 @@ spec:
                   - name: ssh_key_secret_name
                     value: git-creds
                 volumes:
-                - name: flask-workdir
+                - name: flaskapp-workdir
                   persistentVolumeClaim:
                     claimName: workflow-pvc
                 - name: git-creds
