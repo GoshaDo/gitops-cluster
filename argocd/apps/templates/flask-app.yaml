@@ -37,3 +37,7 @@ spec:
             value: "{{ .Values.rookout.controller.host }}"
           - name: ROOKOUT_CONTROLLER_PORT
             value: "{{ .Values.rookout.controller.port }}"
+          - name: ROOKOUT_REMOTE_ORIGIN
+            value: "{{ .Values.webapp.remoteOrigin }}"
+          - name: ROOKOUT_COMMIT
+            value: "{{ .Values.webapp.remoteCommit }}"
