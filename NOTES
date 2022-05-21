@@ -1,21 +1,16 @@
 helm install --namespace argocd --create-namespace argocd ./charts/argocd
 helm install --namespace ingress-nginx --create-namespace ingress-nginx ./charts/ingress-nginx
 kubectl port-forward service/argocd-server -n argocd 8080:443
-kubectl create secret generic docker-token --from-literal=user=goshad --from-literal=password=xxxxxxxxxx -n default
-kubectl create secret generic rookout-token --from-literal=token=xxxxxxxxxx -n default
+kubectl create secret generic rookout-token --from-literal=token=xxxxxxxxxx -n argocd
 
 sudo vim /etc/hosts >
+127.0.0.1 webhook.example
+127.0.0.1 webapp.example
+127.0.0.1 datastore.example
+127.0.0.1 controller.example
+127.0.0.1 argowf.example
 127.0.0.1 flask-app.example
-127.0.0.1 argocd.example.com
-
-openssl req \
--x509 -newkey rsa:4096 -sha256 -nodes \
--keyout tls.key -out tls.crt \
--subj "/CN=flask-app.example" -days 365
-
-kubectl create secret tls ingress-local-tls \
-  --cert=tls.crt \
-  --key=tls.key
+127.0.0.1 argocd.example
 
 
 #Workflows:
@@ -30,5 +25,5 @@ kubectl create -n argocd secret docker-registry regcred \
     --docker-username=${DOCKER_USERNAME} \
     --docker-password=${DOCKER_PASSWORD}
 
-# expose localhost
-ngrok http 4567
+# expose localhost > not working for now
+ngrok http webhook.example
