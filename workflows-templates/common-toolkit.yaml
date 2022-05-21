@@ -21,6 +21,7 @@ spec:
       parameters:
       - name: working_directory
       - name: git_repo
+      - name: repo_name
     script:
       image: alpine:latest
       workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.git_repo}}/{{inputs.parameters.repo_name}}/
