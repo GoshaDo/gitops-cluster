@@ -12,6 +12,8 @@ spec:
       value: "{{workflow.parameters.ssh_key_secret_name}}"
     - name: working_directory
       value: "{{workflow.parameters.working_directory}}"
+    - name: repo_name
+      value: "{{workflow.parameters.repo_name}}"
   templates:
 ##########################git-clone-ssh##########################
   - name: git-clone-ssh
