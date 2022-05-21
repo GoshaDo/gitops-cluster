@@ -44,8 +44,8 @@ spec:
                   parameters:
                   - name: working_directory
                     value: flaskapp-workdir
-                  - name: git_repo
-                    value: git@github.com:GoshaDo/BestFW.git
+                  - name: repository_name
+                    value: git@github.com:GoshaDo/BestFW
                   
                 volumes:
                 - name: flask-workdir
@@ -68,8 +68,8 @@ spec:
                         clusterScope: true
                       arguments:
                         parameters:
-                        - name: git_repo
-                          value: "{{workflow.parameters.git_repo}}"
+                        - name: repository_name
+                          value: "{{workflow.parameters.repository_name}}"
                         - name: ssh_key_secret_name
                           value: "{{workflow.parameters.ssh_key_secret_name}}"
                         - name: working_directory
