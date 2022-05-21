@@ -16,3 +16,8 @@ openssl req \
 kubectl create secret tls ingress-local-tls \
   --cert=tls.crt \
   --key=tls.key
+
+
+#Workflows:
+# expose localhost
+ngrok http 4567

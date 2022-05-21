@@ -28,8 +28,8 @@ spec:
           operation: create
           parameters: []
             # - src:
-            #     dependencyName: bitbucket-event-es
-            #     dataKey: body.sheets
+            #     dependencyName: 
+            #     dataKey: body
             #   dest: spec.arguments.parameters.0.value
           source:
             resource:

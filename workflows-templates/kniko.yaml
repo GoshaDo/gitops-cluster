@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterWorkflowTemplate
+metadata:
+  name: container-image
+spec:
+  serviceAccountName: argo-wf-clusterrole
+  templates:
+  - name: build-kaniko-git
+    inputs:
+      parameters:
+      - name: repo_url
+      - name: repo_ref
+        value: refs/heads/master
+      - name: repo_commit_id
+        value: HEAD
+      - name: container_image
+      - name: container_tag
+      - name: ecr_account
+      - name: ecr_region
+      - name: ecr_repo
+    container:
+      image: gcr.io/kaniko-project/executor:debug
+      command: [/kaniko/executor]
+      args:
+      #example: github.com/acme/myproject.git#refs/heads/mybranch#<desired-commit-id>
+      - --context={{inputs.parameters.repo_url}}#{{inputs.parameters.repo_ref}}#{{inputs.parameters.repo_commit_id}}
+      #example: https://blog.csanchez.org/2020/10/07/building-docker-images-with-kaniko-pushing-to-amazon-elastic-container-registry-ecr/
+      - --destination={{inputs.parameters.ecr_account}}.dkr.ecr.{{inputs.parameters.ecr_region}}.amazonaws.com/{{inputs.parameters.ecr_repo}}/{{inputs.parameters.container_image}}:{{inputs.parameters.container_tag}}
+      #- --cache=true should be ecr for that (to-check policy of erasing layers)
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker/
+    volumes:
+    - name: docker-config
+      configMap:
+        name: docker-config
+
