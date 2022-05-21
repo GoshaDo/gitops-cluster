@@ -10,6 +10,8 @@ spec:
       value: "{{workflow.parameters.wokring_directory}}"
     - name: git_repo
       value: "{{workflow.parameters.git_repo}}"
+    - name: repo_name
+      value: "{{workflow.parameters.repo_name}}"
   templates:
   - name: is-empty
     metadata:
@@ -21,13 +23,11 @@ spec:
       - name: git_repo
     script:
       image: alpine:latest
-      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.git_repo}}/
+      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/
       volumeMounts:
       - name: '{{inputs.parameters.working_directory}}'
         mountPath: /{{inputs.parameters.working_directory}}
       command: [sh]
       source: |
-        pwd
-        ls -alt
         NUM_FILES=$(ls -alt| wc -l| awk '{print $1-3}')
         echo $NUM_FILES
