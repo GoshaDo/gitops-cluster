@@ -82,7 +82,7 @@ spec:
                     - name: kniko-build-and-push
                       templateRef:
                         name: common-toolkit
-                        template: git-update-repo-ssh
+                        template: kaniko-build-and-push
                         clusterScope: true
                       arguments:
                         parameters:
