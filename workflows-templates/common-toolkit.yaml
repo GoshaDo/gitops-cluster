@@ -43,8 +43,8 @@ spec:
       command: [/kaniko/executor]
       args:
       - --dockerfile=Dockerfile
-      - --context=dir:///{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
-      - --destination=goshad/{{inputs.parameters.repo_name}}:latest
+      - --context=dir://{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
+      - --destination=${DOCKER_USERNAME}/{{inputs.parameters.repo_name}}:latest
       volumeMounts:
         - name: docker-config
           mountPath: /kaniko/.docker/
