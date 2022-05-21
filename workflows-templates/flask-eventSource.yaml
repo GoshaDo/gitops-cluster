@@ -14,7 +14,7 @@ spec:
   webhook:
     flaskapp:
       port: "12000"
-      endpoint: /
+      endpoint: /flaskapp
       method: POST
 ---
 apiVersion: argoproj.io/v1alpha1
