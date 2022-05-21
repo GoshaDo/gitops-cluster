@@ -22,5 +22,13 @@ kubectl create secret tls ingress-local-tls \
 
 kubectl create secret generic git-creds --from-file=ssh-private-key=/Users/gosha/.ssh/github -n argocd
 
+DOCKER_USERNAME=goshad
+DOCKER_PASSWORD=[...]
+DOCKER_SERVER=https://index.docker.io/v1/
+kubectl create -n argocd secret docker-registry regcred \
+    --docker-server=${DOCKER_SERVER} \
+    --docker-username=${DOCKER_USERNAME} \
+    --docker-password=${DOCKER_PASSWORD}
+
 # expose localhost
 ngrok http 4567

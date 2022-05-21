@@ -79,5 +79,19 @@ spec:
                           value: "{{workflow.parameters.ssh_key_secret_name}}"
                         - name: working_directory
                           value: "{{workflow.parameters.working_directory}}"
+                    - name: kniko-build-and-push
+                      templateRef:
+                        name: common-toolkit
+                        template: git-update-repo-ssh
+                        clusterScope: true
+                      arguments:
+                        parameters:
+                        - name: repo_name
+                          value: "{{workflow.parameters.repo_name}}"
+                        - name: working_directory
+                          value: "{{workflow.parameters.working_directory}}"
+                      dependencies:
+                        - flask-repo
+
                         
     
