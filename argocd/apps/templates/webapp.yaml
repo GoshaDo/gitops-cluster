@@ -27,3 +27,5 @@ spec:
               paths:
                 - path: /
                   pathType: ImplementationSpecific
+        rookoutHost: {{ .Values.rookout.controller.host }}
+        rookoutPort: {{ .Values.rookout.controller.port }}

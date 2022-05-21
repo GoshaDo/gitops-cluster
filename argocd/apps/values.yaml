@@ -4,8 +4,13 @@ flaskApp:
 webapp:
   image: vtest-5
 
-hostAliases:
-- ip: "127.0.0.1"
-  hostnames:
-  - "controller.example"
-  - "datastore.example"
+# hostAliases:
+# - ip: "127.0.0.1"
+#   hostnames:
+#   - "controller.example"
+#   - "datastore.example"
+
+rookout:
+  controller:
+    host: "ws://rookout-controller.argocd.svc.cluster.local"
+    port: 7488
