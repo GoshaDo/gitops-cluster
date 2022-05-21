@@ -40,7 +40,7 @@ spec:
       - name: repo_name
     container:
       image: gcr.io/kaniko-project/executor
-      command: [sh]
+      command: [/bin/sh]
       args:
       - pwd
       - ls -alt
