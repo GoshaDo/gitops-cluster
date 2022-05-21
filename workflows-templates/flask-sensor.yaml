@@ -42,20 +42,21 @@ spec:
                 serviceAccountName: argo-wf
                 arguments:
                   parameters:
-                  - name: something
-                    value: "hellow world"
                   - name: working_directory
                     value: flaskapp-workdir
                   - name: git_repo
                     value: git@github.com:GoshaDo/BestFW.git
-                  # - name: git-creds
-                  #   secret:
-                  #     secretName: git-creds
-                  #     defaultMode: 0400
+                  
                 volumes:
                 - name: flask-workdir
                   persistentVolumeClaim:
                     claimName: workflow-pvc
+                - name: git-creds
+                  secret:
+                    secretName: git-creds
+                    defaultMode: 0400
+                imagePullSecrets:
+                  - name: docker
                 templates:
                 - name: flask-pipeline
                   dag:
@@ -67,6 +68,10 @@ spec:
                         clusterScope: true
                       arguments:
                         parameters:
-                        - name: something
-                          value: "{{workflow.parameters.something}}"
+                        - name: git_repo
+                          value: "{{workflow.parameters.git_repo}}"
+                        - name: ssh_key_secret_name
+                          value: "{{workflow.parameters.ssh_key_secret_name}}"
+                        - name: working_directory
+                          value: "{{workflow.parameters.working_directory}}"
     
