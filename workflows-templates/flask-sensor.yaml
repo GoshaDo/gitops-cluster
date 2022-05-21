@@ -26,11 +26,11 @@ spec:
           version: v1alpha1
           resource: workflows
           operation: create
-          parameters:
-            - src:
-                dependencyName: flask-event-es
-                dataKey: body.sheets
-              dest: spec.arguments.parameters.0.value
+          # parameters:
+          #   - src:
+          #       dependencyName: flask-event-es
+          #       dataKey: body.sheets
+          #     dest: spec.arguments.parameters.0.value
           source:
             resource:
               apiVersion: argoproj.io/v1alpha1
@@ -44,9 +44,10 @@ spec:
                   parameters:
                   - name: working_directory
                     value: flaskapp-workdir
-                  - name: repository_name
-                    value: git@github.com:GoshaDo/BestFW
-                  
+                  - name: git_repo
+                    value: git@github.com:GoshaDo/BestFW.git
+                  - name: ssh_key_secret_name
+                    value: git-creds
                 volumes:
                 - name: flask-workdir
                   persistentVolumeClaim:
@@ -68,8 +69,8 @@ spec:
                         clusterScope: true
                       arguments:
                         parameters:
-                        - name: repository_name
-                          value: "{{workflow.parameters.repository_name}}"
+                        - name: git_repo
+                          value: "{{workflow.parameters.git_repo}}"
                         - name: ssh_key_secret_name
                           value: "{{workflow.parameters.ssh_key_secret_name}}"
                         - name: working_directory

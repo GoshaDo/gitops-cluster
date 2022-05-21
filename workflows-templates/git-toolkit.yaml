@@ -12,8 +12,6 @@ spec:
       value: "{{workflow.parameters.ssh_key_secret_name}}"
     - name: working_directory
       value: "{{workflow.parameters.working_directory}}"
-    - name: repository_name
-      value: "{{workflow.parameters.repository_name}}"
   templates:
 ##########################git-clone-ssh##########################
   - name: git-clone-ssh
@@ -24,7 +22,6 @@ spec:
       - name: git_repo
       - name: ssh_key_secret_name
       - name: working_directory
-      - name: remove_list
     script:
       image: alpine/git
       workingDir: /{{inputs.parameters.working_directory}}/
@@ -42,7 +39,6 @@ spec:
         ssh-add /etc/ssh-key/ssh-private-key
         rm -rf argocd
         git clone '{{inputs.parameters.git_repo}}'
-        rm -rf '{{inputs.parameters.remove_list}}'
         ls -alt
       env:
       - name: GIT_SSH_COMMAND
@@ -57,11 +53,9 @@ spec:
       - name: git_repo
       - name: ssh_key_secret_name
       - name: working_directory
-      - name: remove_list
-      - name: repository_name
     script:
       image: alpine/git
-      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repository_name}}/
+      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.git_repo}}/
       volumeMounts:
       - name: '{{inputs.parameters.working_directory}}'
         mountPath: /{{inputs.parameters.working_directory}}
@@ -92,8 +86,6 @@ spec:
         - name: git_repo
         - name: ssh_key_secret_name
         - name: working_directory
-        - name: remove_list
-        - name: repository_name
     dag:
       tasks:
         - name: check-empty
@@ -105,8 +97,10 @@ spec:
             parameters:
             - name: working_directory
               value: "{{inputs.parameters.working_directory}}"
-            - name: repository_name
-              value: "{{inputs.parameters.repository_name}}"
+            - name: git_repo
+              value: "{{inputs.parameters.git_repo}}"
+            - name: ssh_key_secret_name
+              value: "{{inputs.parameters.ssh_key_secret_name}}"
         - name: git-clone
           templateRef:
             name: git-toolkit
@@ -120,8 +114,6 @@ spec:
               value: "{{inputs.parameters.ssh_key_secret_name}}"
             - name: working_directory
               value: "{{inputs.parameters.working_directory}}"
-            - name: remove_list
-              value: "{{inputs.parameters.remove_list}}"
           dependencies:
           - check-empty
           when: "{{tasks.check-empty.outputs.result}} == 0"
@@ -138,8 +130,6 @@ spec:
               value: "{{inputs.parameters.ssh_key_secret_name}}"
             - name: working_directory
               value: "{{inputs.parameters.working_directory}}"
-            - name: remove_list
-              value: "{{inputs.parameters.remove_list}}"
           dependencies:
           - check-empty
           when: "{{tasks.check-empty.outputs.result}} != 0"
