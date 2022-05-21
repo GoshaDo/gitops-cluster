@@ -43,7 +43,7 @@ spec:
       command: [/kaniko/executor]
       args:
       - --context=dir:///flaskapp-workdir/BestFW
-      - --destination=${DOCKER_USERNAME}/{{inputs.parameters.repo_name}}:latest
+      - --destination=goshad/bestfw:latest
       - --cache
       volumeMounts:
         - name: docker-config
