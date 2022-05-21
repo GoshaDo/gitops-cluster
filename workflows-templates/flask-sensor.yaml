@@ -74,7 +74,7 @@ spec:
                         - name: git_repo
                           value: "{{workflow.parameters.git_repo}}"
                         - name: repo_name
-                          value: "{{workflow.parameters.repo_name"
+                          value: "{{workflow.parameters.repo_name}}"
                         - name: ssh_key_secret_name
                           value: "{{workflow.parameters.ssh_key_secret_name}}"
                         - name: working_directory
