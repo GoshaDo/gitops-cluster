@@ -34,6 +34,6 @@ spec:
                 name: rookout-token
                 key: token
           - name: ROOKOUT_CONTROLLER_HOST
-            value: {{ .Values.rookout.controller.host }}
+            value: "{{ .Values.rookout.controller.host }}"
           - name: ROOKOUT_CONTROLLER_PORT
-            value: {{ .Values.rookout.controller.port }}
+            value: "{{ .Values.rookout.controller.port }}"
