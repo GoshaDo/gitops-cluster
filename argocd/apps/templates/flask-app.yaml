@@ -28,12 +28,12 @@ spec:
                 - path: /
                   pathType: ImplementationSpecific
          env: 
-          - name: RO_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: rookout-token
-                key: token
-          - name: ROOKOUT_CONTROLLER_HOST
-            value: {{ .Values.rookout.controller.host }}
-          - name: ROOKOUT_CONTROLLER_PORT
-            value: {{ .Values.rookout.controller.port }}
+        - name: RO_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: rookout-token
+              key: token
+        - name: ROOKOUT_CONTROLLER_HOST
+          value: "{{ .Values.rookout.controller.host }}"
+        - name: ROOKOUT_CONTROLLER_PORT
+          value: {{ .Values.rookout.controller.port }}
