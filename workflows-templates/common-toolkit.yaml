@@ -42,7 +42,7 @@ spec:
       image: gcr.io/kaniko-project/executor
       command: [/kaniko/executor]
       args:
-      - --context=/{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
+      - --context=dir:////{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
       - --destination=${DOCKER_USERNAME}/{{inputs.parameters.repo_name}}:latest
       - --cache
       volumeMounts:
