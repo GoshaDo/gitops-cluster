@@ -36,10 +36,10 @@ spec:
     inputs:
       parameters:
       - name: working_directory
-      - name: repository_name
+      - name: git_repo
     script:
       image: alpine:latest
-      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repository_name}}/
+      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.git_repo}}/
       volumeMounts:
       - name: '{{inputs.parameters.working_directory}}'
         mountPath: /{{inputs.parameters.working_directory}}
