@@ -60,8 +60,51 @@ The pipline will clone or pull the repo and build new image using kaniko (We wan
 <img src="https://github.com/GoshaDo/gitops-cluster/blob/main/images/CICD.png" width="852" height="361">
 
 
-# Deployment manual:
+# Rookout Deployment manual:
+1. Lunch docker-desktop k8s cluster using GUI.
+2. install following charts:
+```
+helm install --namespace argocd --create-namespace argocd ./charts/argocd
+helm install --namespace ingress-nginx --create-namespace ingress-nginx ./charts/ingress-nginx
+```
+3. port-forwding
+```
+kubectl port-forward service/argocd-server -n argocd 8080:443
+```
+4. Deploy safley rookout token as k8s secret
+```
+kubectl create secret generic rookout-token --from-literal=token=[SENSTIVE] -n argocd
+```
+5. edit sudo vim /etc/hosts with
+```
+127.0.0.1 webhook.example
+127.0.0.1 webapp.example
+127.0.0.1 datastore.example
+127.0.0.1 controller.example
+127.0.0.1 argowf.example
+127.0.0.1 flask-app.example
+127.0.0.1 argocd.example
+```
 
+# Workflows Deployment manual:
+1. create ssh keys using ssh-keygen. chmod to 400 and configure public key in github repo, and inject private key using :
+```
+kubectl create secret generic git-creds --from-file=ssh-private-key=/Users/gosha/.ssh/github -n argocd
+```
+2. deploy dockerhub auth secret for your's container registrey.
+```
+export DOCKER_USERNAME=goshad
+export DOCKER_PASSWORD=[SENSTIVE]
+export DOCKER_SERVER=https://index.docker.io/v1/
+kubectl create -n argocd secret docker-registry regcred \
+    --docker-server=${DOCKER_SERVER} \
+    --docker-username=${DOCKER_USERNAME} \
+    --docker-password=${DOCKER_PASSWORD}
+```
+3. expose using ngrok
+```
+ngrok tls webhook.example 443
+```
 
 
 # Future features:
