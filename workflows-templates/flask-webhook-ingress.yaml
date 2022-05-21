@@ -9,7 +9,7 @@ metadata:
     name: ingress-webook
 spec:
   rules:
-  - host: "localhost"
+  - host: "webhook.example"
     http:
       paths:
       - pathType: Prefix
