@@ -4,7 +4,7 @@ metadata:
   name: webhook
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    ingress.kubernetes.io/ssl-redirect: "true"
+    # ingress.kubernetes.io/ssl-redirect: "true"
   labels:
     name: ingress-webook
 spec:
