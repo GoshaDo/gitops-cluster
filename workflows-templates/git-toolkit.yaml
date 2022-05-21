@@ -55,7 +55,7 @@ spec:
       - name: repo_name
     script:
       image: alpine/git
-      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.git_repo}}/
+      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/
       volumeMounts:
       - name: '{{inputs.parameters.working_directory}}'
         mountPath: /{{inputs.parameters.working_directory}}
@@ -130,8 +130,6 @@ spec:
               value: "{{inputs.parameters.git_repo}}"
             - name: repo_name
               value: "{{inputs.parameters.repo_name}}"
-            - name: ssh_key_secret_name
-              value: "{{inputs.parameters.ssh_key_secret_name}}"
             - name: working_directory
               value: "{{inputs.parameters.working_directory}}"
           dependencies:
