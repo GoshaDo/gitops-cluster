@@ -27,13 +27,13 @@ spec:
               paths:
                 - path: /
                   pathType: ImplementationSpecific
-         env: 
-        - name: RO_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: rookout-token
-              key: token
-        - name: ROOKOUT_CONTROLLER_HOST
-          value: "ws://rookout-controller.argocd.svc.cluster.local"
-        - name: ROOKOUT_CONTROLLER_PORT
-          value: 7488
+        env: 
+          - name: RO_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: rookout-token
+                key: token
+          - name: ROOKOUT_CONTROLLER_HOST
+            value: "ws://rookout-controller.argocd.svc.cluster.local"
+          - name: ROOKOUT_CONTROLLER_PORT
+            value: 7488
