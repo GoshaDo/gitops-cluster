@@ -42,8 +42,8 @@ spec:
       image: gcr.io/kaniko-project/executor
       command: [/kaniko/executor]
       args:
-      - --dockerfile=Dockerfile
-      - --context=dir://{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
+      - --dockerfile=/{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/Dockerfile
+      - --context=dir:///{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
       - --destination=${DOCKER_USERNAME}/{{inputs.parameters.repo_name}}:latest
       volumeMounts:
         - name: docker-config
