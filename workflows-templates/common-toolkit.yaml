@@ -40,10 +40,16 @@ spec:
       - name: repo_name
     container:
       image: gcr.io/kaniko-project/executor
-      command: [/kaniko/executor]
+      command: [sh]
       args:
-      - --context=dir:////{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
-      - --destination=${DOCKER_USERNAME}/{{inputs.parameters.repo_name}}:latest
+      - pwd
+      - ls -alt
+      - ls -alt /flaskapp-workdir
+      - ls -alt /flaskapp-workdir/bestfw
+      # command: [/kaniko/executor]
+      # args:
+      # - --context=dir:///{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}
+      # - --destination=${DOCKER_USERNAME}/{{inputs.parameters.repo_name}}:latest
       - --cache
       volumeMounts:
         - name: docker-config
