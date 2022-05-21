@@ -50,5 +50,16 @@ flask-app: https://github.com/GoshaDo/BestFW
 webapp: The dockerfile edited and the repo wasn't forked, those changes was performed to support arm64 chip. base image have been changed to python:3.8-slim and "apt-get install g++ -y " step added. repo: https://github.com/Rookout/tutorial-python
 
 
+# CI/CD
+
+# Deployment manual:
+
+
+
+# Future features:
+1. Use ngrok to expose port 443 and get POST request from webhook.
+2. automatic deployment by changing the tag of flask-app in argocd/apps/value.yaml file after build and pushing to dockerhub.
+3. intergrating integration test in staging enviorment before. if failed will revert changes by updating back the value.yaml file 
+4. seperate applications and infra to diffrent namespaces.
 
 
