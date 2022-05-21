@@ -20,6 +20,7 @@ spec:
       - name: git_repo
       - name: ssh_key_secret_name
       - name: working_directory
+      - name: repo_name
     script:
       image: alpine/git
       workingDir: /{{inputs.parameters.working_directory}}/
@@ -36,7 +37,7 @@ spec:
         eval "$( ssh-agent -s )"
         ssh-add /etc/ssh-key/ssh-private-key
         rm -rf argocd
-        git clone '{{inputs.parameters.git_repo}}'
+        git clone '{{inputs.parameters.git_repo}}/{{inputs.parameters.repo_name}}'
         ls -alt
       env:
       - name: GIT_SSH_COMMAND
@@ -49,6 +50,7 @@ spec:
       - name: git_repo
       - name: ssh_key_secret_name
       - name: working_directory
+      - name: repo_name
     script:
       image: alpine/git
       workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.git_repo}}/
@@ -67,7 +69,7 @@ spec:
         pwd
         ls -alt
         git config --global --add safe.directory $(pwd)
-        git pull '{{inputs.parameters.git_repo}}'
+        git pull '{{inputs.parameters.git_repo}}/{{inputs.parameters.repo_name}}'
       env:
       - name: GIT_SSH_COMMAND
         value: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
@@ -79,6 +81,7 @@ spec:
         - name: git_repo
         - name: ssh_key_secret_name
         - name: working_directory
+        - name: repo_name
     dag:
       tasks:
         - name: check-empty
@@ -92,6 +95,8 @@ spec:
               value: "{{inputs.parameters.working_directory}}"
             - name: git_repo
               value: "{{inputs.parameters.git_repo}}"
+            - name: repo_name
+              value: "{{inputs.parameters.repo_name}}"
             - name: ssh_key_secret_name
               value: "{{inputs.parameters.ssh_key_secret_name}}"
         - name: git-clone
@@ -103,6 +108,8 @@ spec:
             parameters:
             - name: git_repo
               value: "{{inputs.parameters.git_repo}}"
+            - name: repo_name
+              value: "{{inputs.parameters.repo_name}}"
             - name: ssh_key_secret_name
               value: "{{inputs.parameters.ssh_key_secret_name}}"
             - name: working_directory
@@ -119,6 +126,8 @@ spec:
             parameters:
             - name: git_repo
               value: "{{inputs.parameters.git_repo}}"
+            - name: repo_name
+              value: "{{inputs.parameters.repo_name}}"
             - name: ssh_key_secret_name
               value: "{{inputs.parameters.ssh_key_secret_name}}"
             - name: working_directory

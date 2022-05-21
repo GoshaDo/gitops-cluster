@@ -45,7 +45,9 @@ spec:
                   - name: working_directory
                     value: flaskapp-workdir
                   - name: git_repo
-                    value: git@github.com:GoshaDo/BestFW.git
+                    value: git@github.com:GoshaDo
+                  - name: repo_name
+                    value: BestFW
                   - name: ssh_key_secret_name
                     value: git-creds
                 volumes:
@@ -71,8 +73,11 @@ spec:
                         parameters:
                         - name: git_repo
                           value: "{{workflow.parameters.git_repo}}"
+                        - name: repo_name
+                          value: "{{workflow.parameters.repo_name"
                         - name: ssh_key_secret_name
                           value: "{{workflow.parameters.ssh_key_secret_name}}"
                         - name: working_directory
                           value: "{{workflow.parameters.working_directory}}"
+                        
     
