@@ -38,6 +38,9 @@ spec:
               metadata:
                 generateName: flask-pipeline-
               spec:
+                retryStrategy:
+                  retryPolicy: OnError
+                  limit: 1
                 entrypoint: flask-pipeline
                 serviceAccountName: argo-wf
                 arguments:
@@ -87,7 +90,7 @@ spec:
                       arguments:
                         parameters:
                         - name: repo_name
-                          value: "{{workflow.parameters.repo_name}}"
+                          value: "bestfw"
                         - name: working_directory
                           value: "{{workflow.parameters.working_directory}}"
                       dependencies:
