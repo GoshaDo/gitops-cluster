@@ -67,15 +67,11 @@ The pipline will clone or pull the repo and build new image using kaniko (We wan
 helm install --namespace argocd --create-namespace argocd ./charts/argocd
 helm install --namespace ingress-nginx --create-namespace ingress-nginx ./charts/ingress-nginx
 ```
-3. port-forwding
-```
-kubectl port-forward service/argocd-server -n argocd 8080:443
-```
-4. Deploy safley rookout token as k8s secret
+3. Deploy safley rookout token as k8s secret
 ```
 kubectl create secret generic rookout-token --from-literal=token=[SENSTIVE] -n argocd
 ```
-5. edit sudo vim /etc/hosts with
+4. edit sudo vim /etc/hosts with
 ```
 127.0.0.1 webhook.example
 127.0.0.1 webapp.example
