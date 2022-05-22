@@ -27,7 +27,7 @@ spec:
       volumeMounts:
       command: [sh]
       source: |
-        TAG_LIST=$(curl --silent https://registry.hub.docker.com/v1/repositories/goshad/webapp/tags)
+        TAG_LIST=$(curl --silent https://registry.hub.docker.com/v1/repositories/{{workflow.parameters.container_registery}}/{{workflow.parameters.container_repo}}/tags)
         TMP=$(echo $RESPONSE | jq --raw-output ".[]")
         _jq() {
           echo ${1} | base64 --decode | jq --raw-output ${2}
