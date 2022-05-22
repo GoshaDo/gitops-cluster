@@ -23,7 +23,7 @@ spec:
       - name: container_registery
       - name: container_repo
     script:
-      image: alpine:latest
+      image: goshad/pretest:v0
       volumeMounts:
       command: [sh]
       source: |
@@ -70,12 +70,13 @@ spec:
       parameters:
       - name: working_directory
       - name: repo_name
+      - name: new_tag
     container:
       image: gcr.io/kaniko-project/executor
       command: [/kaniko/executor]
       args:
       - --context=dir:///flaskapp-workdir/BestFW
-      - --destination=goshad/bestfw:latest
+      - --destination=goshad/bestfw:{{inputs.parameters.new_tag}}
       - --cache
       volumeMounts:
         - name: docker-config
