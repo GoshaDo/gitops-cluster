@@ -50,6 +50,8 @@ spec:
                     value: BestFW
                   - name: ssh_key_secret_name
                     value: git-creds
+                  - name: container_repo
+                    value: bestfw
                 volumes:
                 - name: flaskapp-workdir
                   persistentVolumeClaim:
@@ -90,6 +92,21 @@ spec:
                           value: "bestfw"
                         - name: working_directory
                           value: "{{workflow.parameters.working_directory}}"
+                        - name: new_tag
+                          value: "{{tasks.pre-build.outputs.result}}"
+                      dependencies:
+                        - pre-build
+                    - name: pre-build
+                      templateRef:
+                        name: common-toolkit
+                        template: versioning
+                        clusterScope: true
+                      arguments:
+                        parameters:
+                        - name: container_registery
+                          value: "goshad"
+                        - name: container_repo
+                          value: "{{workflow.parameters.container_repo}}"
                       dependencies:
                         - flask-repo
 
