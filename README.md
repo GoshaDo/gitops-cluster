@@ -5,8 +5,8 @@ The build and deployment of aplications would be in gitops percipels using argoc
 
 
 # Networking
-The local cluster will use ngnix controller for external traffic. conroller's service will be expose on 443 using kubectl port-forwd method. 
-cert-manager deployet for auto self-signed certificates.
+The local cluster will use ngnix controller for external traffic. conroller's service will be expose on 443 and 80 by ngnix loadbalancer. 
+cert-manager will auto generate self-signed certificates.
 
 External DNS server will not be used. all domains will be configurated locally in /etc/host and resloved to localhost. by the domain ngnix controller will route to the right service using ingress.
 
