@@ -99,14 +99,13 @@ kubectl create -n argocd secret docker-registry regcred \
 ```
 3. expose using ngrok
 ```
-ngrok tls webhook.example 443
+ngrok http webhook.example:80
 ```
 
 
 # Future features:
-1. Use ngrok to expose port 443 and get POST request from webhook.
-2. automatic deployment by changing the tag of flask-app in argocd/apps/value.yaml file after build and pushing to dockerhub.
-3. intergrating integration test in staging enviorment before. if failed will revert changes by updating back the value.yaml file 
-4. seperate applications and infra to diffrent namespaces.
+1. automatic deployment by changing the tag of flask-app in argocd/apps/value.yaml file after build and pushing to dockerhub.
+2. intergrating integration test in staging enviorment before. if failed will revert changes by updating back the value.yaml file 
+3. seperate applications and infra to diffrent namespaces.
 
 
