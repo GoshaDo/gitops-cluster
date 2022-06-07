@@ -1,7 +1,7 @@
 repoUrl: https://github.com/GoshaDo/gitops-cluster
 flaskApp:
   image: vtest-8
-  remoteOrigin: "https://github.com/omriez/BestFW.git"
+  remoteOrigin: "https://github.com/GoshaDo/BestFW.git"
   remoteCommit: "HEAD"
 webapp:
   image: vtest-6
