@@ -81,21 +81,21 @@ spec:
                           value: "{{workflow.parameters.ssh_key_secret_name}}"
                         - name: working_directory
                           value: "{{workflow.parameters.working_directory}}"
-                    - name: kniko-build-and-push
-                      templateRef:
-                        name: common-toolkit
-                        template: kaniko-build-and-push
-                        clusterScope: true
-                      arguments:
-                        parameters:
-                        - name: repo_name
-                          value: "bestfw"
-                        - name: working_directory
-                          value: "{{workflow.parameters.working_directory}}"
-                        - name: new_tag
-                          value: "{{tasks.pre-build.outputs.result}}"
-                      dependencies:
-                        - pre-build
+                    # - name: kniko-build-and-push
+                    #   templateRef:
+                    #     name: common-toolkit
+                    #     template: kaniko-build-and-push
+                    #     clusterScope: true
+                    #   arguments:
+                    #     parameters:
+                    #     - name: repo_name
+                    #       value: "bestfw"
+                    #     - name: working_directory
+                    #       value: "{{workflow.parameters.working_directory}}"
+                    #     - name: new_tag
+                    #       value: "{{tasks.pre-build.outputs.result}}"
+                    #   dependencies:
+                    #     - pre-build
                     # - name: pre-build
                     #   templateRef:
                     #     name: common-toolkit
