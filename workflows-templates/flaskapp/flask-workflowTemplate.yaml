@@ -36,7 +36,7 @@ spec:
         template: flask-repo
       - name: pre-build
         template: pre-build
-      #   dependencies: flask-repo
+        dependencies: flask-repo
       # - name: kniko-build-and-push
       #   template: kniko-build-and-push
       #   dependencies: pre-build
