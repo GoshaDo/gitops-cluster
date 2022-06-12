@@ -17,6 +17,8 @@ spec:
       value: git-creds
     - name: container_repo
       value: bestfw
+    - name: container_registery
+      value: "goshad"
   volumes:
   - name: flaskapp-workdir
     persistentVolumeClaim:
@@ -32,8 +34,8 @@ spec:
       tasks:
       - name: flask-repo
         template: flask-repo
-      # - name: pre-build
-      #   template: pre-build
+      - name: pre-build
+        template: pre-build
       #   dependencies: flask-repo
       # - name: kniko-build-and-push
       #   template: kniko-build-and-push
@@ -54,19 +56,17 @@ spec:
         value: "{{workflow.parameters.ssh_key_secret_name}}"
       - name: working_directory
         value: "{{workflow.parameters.working_directory}}"
-  # - name: pre-build
-  #   templateRef:
-  #     name: common-toolkit
-  #     template: versioning
-  #     clusterScope: true
-  #   arguments:
-  #     parameters:
-  #     - name: container_registery
-  #       value: "goshad"
-  #     - name: container_repo
-  #       value: "{{workflow.parameters.container_repo}}"
-  #   dependencies:
-  #     - flask-repo
+  - name: pre-build
+    templateRef:
+      name: common-toolkit
+      template: versioning
+      clusterScope: true
+    arguments:
+      parameters:
+      - name: container_registery
+        value: "{{workflow.parameters.container_repo}}"
+      - name: container_repo
+        value: "{{workflow.parameters.container_repo}}"
   # - name: kniko-build-and-push
   #   templateRef:
   #     name: common-toolkit
