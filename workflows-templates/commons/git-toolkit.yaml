@@ -4,16 +4,6 @@ kind: ClusterWorkflowTemplate
 metadata:
   name: git-toolkit
 spec:
-  arguments:
-    parameters:
-    - name: git_repo
-      value: "{{workflow.parameters.git_repo}}"
-    - name: ssh_key_secret_name
-      value: "{{workflow.parameters.ssh_key_secret_name}}"
-    - name: working_directory
-      value: "{{workflow.parameters.working_directory}}"
-    - name: repo_name
-      value: "{{workflow.parameters.repo_name}}"
   templates:
 ##########################git-clone-ssh##########################
   - name: git-clone-ssh
@@ -33,12 +23,11 @@ spec:
         mountPath: "/etc/ssh-key"
         readOnly: true
       command: [sh]
-      # can we remove the line rm -rf argocd ?
       source: |
         set -euo pipefail
         eval "$( ssh-agent -s )"
         ssh-add /etc/ssh-key/ssh-private-key
-        rm -rf argocd
+
         git clone '{{inputs.parameters.git_repo}}/{{inputs.parameters.repo_name}}'
         ls -alt
       env:
@@ -67,11 +56,10 @@ spec:
         set -euo pipefail
         eval "$( ssh-agent -s )"
         ssh-add /etc/ssh-key/ssh-private-key
-        rm -rf argocd
-        pwd
-        ls -alt
         git config --global --add safe.directory $(pwd)
+
         git pull '{{inputs.parameters.git_repo}}/{{inputs.parameters.repo_name}}'
+        ls -alt
       env:
       - name: GIT_SSH_COMMAND
         value: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
