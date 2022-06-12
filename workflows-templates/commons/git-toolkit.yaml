@@ -4,6 +4,16 @@ kind: ClusterWorkflowTemplate
 metadata:
   name: git-toolkit
 spec:
+  arguments:
+    parameters:
+    - name: git_repo
+      value: "{{workflow.parameters.git_repo}}"
+    - name: ssh_key_secret_name
+      value: "{{workflow.parameters.ssh_key_secret_name}}"
+    - name: working_directory
+      value: "{{workflow.parameters.working_directory}}"
+    - name: repo_name
+      value: "{{workflow.parameters.repo_name}}"
   templates:
 ##########################git-clone-ssh##########################
   - name: git-clone-ssh
@@ -57,7 +67,7 @@ spec:
         eval "$( ssh-agent -s )"
         ssh-add /etc/ssh-key/ssh-private-key
         git config --global --add safe.directory $(pwd)
-
+        
         git pull '{{inputs.parameters.git_repo}}/{{inputs.parameters.repo_name}}'
         ls -alt
       env:
