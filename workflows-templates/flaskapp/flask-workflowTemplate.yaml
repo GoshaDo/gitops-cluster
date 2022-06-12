@@ -3,7 +3,7 @@ kind: ClusterWorkflowTemplate
 metadata:
   name: flask-pipeline-template
 spec:
-  entrypoint: main
+  entrypoint: init
   serviceAccountName: argo-wf
   arguments:
     parameters:
@@ -29,7 +29,7 @@ spec:
       defaultMode: 0400
   
   templates:
-    - name: main
+    - name: init
       dag:
         tasks:
         - name: flask-repo
