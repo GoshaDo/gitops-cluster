@@ -1,0 +1,98 @@
+
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterWorkflowTemplate
+metadata:
+  name: common-toolkit
+spec:
+  arguments:
+    parameters:
+    - name: wokring_directory
+      value: "{{workflow.parameters.wokring_directory}}"
+    - name: git_repo
+      value: "{{workflow.parameters.git_repo}}"
+    - name: repo_name
+      value: "{{workflow.parameters.repo_name}}"
+  templates:
+##########################versioning##########################
+  - name: versioning
+    metadata:
+      labels:
+        k8s-app: argo-workflows
+    inputs:
+      parameters:
+      - name: container_registery
+      - name: container_repo
+    script:
+      image: goshad/pretest:v0
+      volumeMounts:
+      command: [sh]
+      source: |
+        TAG_LIST=$(curl --silent https://registry.hub.docker.com/v1/repositories/{{workflow.parameters.container_registery}}/{{workflow.parameters.container_repo}}/tags)
+        TMP=$(echo $RESPONSE | jq --raw-output ".[]")
+        _jq() {
+          echo ${1} | base64 --decode | jq --raw-output ${2}
+        }
+        for row in $(echo "${RESPONSE}" | jq -r '.[] | @base64'); do
+          TMP=$(_jq $row '.name' | awk -F '.' '{print $1}')          
+        done
+
+        regex="([0-9]+).([0-9]+).([0-9]+)"
+        if [[ $TMP =~ $regex ]]; then
+          major="${BASH_REMATCH[1]}"
+          minor="${BASH_REMATCH[2]}"
+          bug="${BASH_REMATCH[3]}"
+        fi
+        bug=$(echo $bug + 1 | bc)
+        echo "${major}.${minor}.${bug}"
+##########################is-empty##########################
+  - name: is-empty
+    metadata:
+      labels:
+        k8s-app: argo-workflows
+    inputs:
+      parameters:
+      - name: working_directory
+      - name: git_repo
+      - name: repo_name
+    script:
+      image: alpine:latest
+      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/
+      volumeMounts:
+      - name: '{{inputs.parameters.working_directory}}'
+        mountPath: /{{inputs.parameters.working_directory}}
+      command: [sh]
+      source: |
+        NUM_FILES=$(ls -alt| wc -l| awk '{print $1-3}')
+        echo $NUM_FILES
+##########################kaniko-build-and-push##########################
+  - name: kaniko-build-and-push
+    inputs:
+      parameters:
+      - name: working_directory
+      - name: repo_name
+      - name: new_tag
+    container:
+      image: gcr.io/kaniko-project/executor
+      command: [/kaniko/executor]
+      args:
+      - --context=dir:///flaskapp-workdir/BestFW
+      - --destination=goshad/bestfw:{{inputs.parameters.new_tag}}
+      - --cache
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker/
+        - name: '{{inputs.parameters.working_directory}}'
+          mountPath: /{{inputs.parameters.working_directory}}
+      resources:
+        limits:
+          cpu: 1
+          memory: 1Gi
+    volumes:
+    - name: docker-config
+      projected:
+        sources:
+        - secret:
+            name: regcred
+            items:
+              - key: .dockerconfigjson
+                path: config.json

@@ -1,0 +1,34 @@
+#https://github.com/argoproj/argo-events/blob/master/api/sensor.md
+#https://github.com/argoproj/argo-workflows/blob/master/examples/ci.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: flask-sensor
+  namespace: argocd
+  labels:
+    k8s-app: argo-workflows
+spec:
+  template:
+    serviceAccountName: argo-wf
+  dependencies:
+    - name: flask-event-es
+      eventSourceName: flask-event-source
+      eventName: flaskapp
+  triggers:
+    - template:
+        name: flask-pipeline
+        argoWorkflow:
+          operation: submit
+          metadata:
+            generateName: flask-pipeline-
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                name: flask-pipeline-template
+              
+              
+              
+                        
+    
