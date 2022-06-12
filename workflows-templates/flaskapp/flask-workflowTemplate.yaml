@@ -38,9 +38,9 @@ spec:
         template: pre-build
         dependencies: 
           - flask-repo
-      # - name: kniko-build-and-push
-      #   template: kniko-build-and-push
-      #   dependencies: pre-build
+      - name: kniko-build-and-push
+        template: kniko-build-and-push
+        dependencies: pre-build
 
   - name: flask-repo
     templateRef:
@@ -68,18 +68,18 @@ spec:
         value: "{{workflow.parameters.container_repo}}"
       - name: container_repo
         value: "{{workflow.parameters.container_repo}}"
-  # - name: kniko-build-and-push
-  #   templateRef:
-  #     name: common-toolkit
-  #     template: kaniko-build-and-push
-  #     clusterScope: true
-  #   arguments:
-  #     parameters:
-  #     - name: repo_name
-  #       value: "bestfw"
-  #     - name: working_directory
-  #       value: "{{workflow.parameters.working_directory}}"
-  #     - name: new_tag
-  #       value: "{{tasks.pre-build.outputs.result}}"
+  - name: kniko-build-and-push
+    templateRef:
+      name: common-toolkit
+      template: kaniko-build-and-push
+      clusterScope: true
+    arguments:
+      parameters:
+      - name: repo_name
+        value: "bestfw"
+      - name: working_directory
+        value: "{{workflow.parameters.working_directory}}"
+      - name: new_tag
+        value: "{{tasks.pre-build.outputs.result}}"
 
                     

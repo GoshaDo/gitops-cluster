@@ -4,14 +4,6 @@ kind: ClusterWorkflowTemplate
 metadata:
   name: common-toolkit
 spec:
-  arguments:
-    parameters:
-    - name: wokring_directory
-      value: "{{workflow.parameters.wokring_directory}}"
-    - name: git_repo
-      value: "{{workflow.parameters.git_repo}}"
-    - name: repo_name
-      value: "{{workflow.parameters.repo_name}}"
   templates:
 ##########################versioning##########################
   - name: versioning
