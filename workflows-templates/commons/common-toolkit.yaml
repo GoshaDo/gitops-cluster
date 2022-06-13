@@ -121,6 +121,7 @@ spec:
         pwd
         ls -alt
 
+        echo '.{{inputs.parameters.component}}.image = {{inputs.parameters.new_tag}}'
         yq -i e '.{{inputs.parameters.component}}.image = {{inputs.parameters.new_tag}}' ./argocd/apps/values.yaml
         cat ./argocd/apps/values.yaml
 
