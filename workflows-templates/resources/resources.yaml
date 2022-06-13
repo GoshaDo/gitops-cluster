@@ -42,6 +42,7 @@ rules:
   - workflows/finalizers
   - applications
   - appprojects
+  - clusterworkflowtemplates
   verbs:
   - get
   - list
