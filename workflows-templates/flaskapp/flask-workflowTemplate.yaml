@@ -32,64 +32,46 @@ spec:
     - name: main
       dag:
         tasks:
-          - name: flask-repo
-            templateRef: 
-              name: flask-pipeline-template
-              template: flask-repo
-              clusterScope: true
-          - name: pre-build
-            templateRef: 
-              name: flask-pipeline-template 
-              template: pre-build
-              clusterScope: true
-            dependencies: 
-            - flask-repo
-          - name: kniko-build-and-push
-            templateRef: 
-              name: flask-pipeline-template
-              template: kniko-build-and-push
-              clusterScope: true
-            dependencies: 
-            - pre-build
+        - name: flask-repo
+          templateRef:
+            name: git-toolkit
+            template: git-update-repo-ssh
+            clusterScope: true
+          arguments:
+            parameters:
+            - name: git_repo
+              value: "{{workflow.parameters.git_repo}}"
+            - name: repo_name
+              value: "{{workflow.parameters.repo_name}}"
+            - name: ssh_key_secret_name
+              value: "{{workflow.parameters.ssh_key_secret_name}}"
+            - name: working_directory
+              value: "{{workflow.parameters.working_directory}}"
+        - name: pre-build
+          templateRef:
+            name: common-toolkit
+            template: versioning
+            clusterScope: true
+          arguments:
+            parameters:
+            - name: container_registery
+              value: "{{workflow.parameters.container_repo}}"
+            - name: container_repo
+              value: "{{workflow.parameters.container_repo}}"
+          dependencies: flask-repo
+        - name: kniko-build-and-push
+          templateRef:
+            name: common-toolkit
+            template: kaniko-build-and-push
+            clusterScope: true
+          arguments:
+            parameters:
+            - name: repo_name
+              value: "bestfw"
+            - name: working_directory
+              value: "{{workflow.parameters.working_directory}}"
+            - name: new_tag
+              value: "{{tasks.pre-build.outputs.result}}"
+            dependencies: pre-build
 
-    - name: flask-repo
-      templateRef:
-        name: git-toolkit
-        template: git-update-repo-ssh
-        clusterScope: true
-      arguments:
-        parameters:
-        - name: git_repo
-          value: "{{workflow.parameters.git_repo}}"
-        - name: repo_name
-          value: "{{workflow.parameters.repo_name}}"
-        - name: ssh_key_secret_name
-          value: "{{workflow.parameters.ssh_key_secret_name}}"
-        - name: working_directory
-          value: "{{workflow.parameters.working_directory}}"
-    - name: pre-build
-      templateRef:
-        name: common-toolkit
-        template: versioning
-        clusterScope: true
-      arguments:
-        parameters:
-        - name: container_registery
-          value: "{{workflow.parameters.container_repo}}"
-        - name: container_repo
-          value: "{{workflow.parameters.container_repo}}"
-    - name: kniko-build-and-push
-      templateRef:
-        name: common-toolkit
-        template: kaniko-build-and-push
-        clusterScope: true
-      arguments:
-        parameters:
-        - name: repo_name
-          value: "bestfw"
-        - name: working_directory
-          value: "{{workflow.parameters.working_directory}}"
-        - name: new_tag
-          value: "{{tasks.pre-build.outputs.result}}"
-
-                    
+                        
