@@ -1,5 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ClusterWorkflowTemplate
+kind: WorkflowTemplate
 metadata:
   name: flask-pipeline-template
 spec:
@@ -33,16 +33,22 @@ spec:
       dag:
         tasks:
           - name: flask-repo
-            template: flask-repo
+            templateRef: 
+              name: flask-pipeline-template
+              template: flask-repo
           - name: pre-build
-            template: pre-build
+            templateRef: 
+              name: flask-pipeline-template 
+              template: pre-build
             dependencies: 
             - flask-repo
           - name: kniko-build-and-push
-            template: kniko-build-and-push
+            templateRef: 
+              name: flask-pipeline-template
+              template: kniko-build-and-push
             dependencies: 
             - pre-build
-            
+
     - name: flask-repo
       templateRef:
         name: git-toolkit

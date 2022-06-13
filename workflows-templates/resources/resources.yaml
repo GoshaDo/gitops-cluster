@@ -43,6 +43,7 @@ rules:
   - applications
   - appprojects
   - clusterworkflowtemplates
+  - Workflowtemplates
   verbs:
   - get
   - list
