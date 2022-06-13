@@ -58,7 +58,8 @@ spec:
               value: "{{workflow.parameters.container_repo}}"
             - name: container_repo
               value: "{{workflow.parameters.container_repo}}"
-          dependencies: flask-repo
+          dependencies: 
+            - flask-repo
         - name: kniko-build-and-push
           templateRef:
             name: common-toolkit
@@ -72,6 +73,7 @@ spec:
               value: "{{workflow.parameters.working_directory}}"
             - name: new_tag
               value: "{{tasks.pre-build.outputs.result}}"
-            dependencies: pre-build
+            dependencies: 
+              - pre-build
 
                         
