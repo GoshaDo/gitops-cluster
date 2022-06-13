@@ -22,14 +22,12 @@ spec:
           version: v1alpha1
           resource: Workflow
           operation: submit
-          metadata:
-            generateName: flask-pipeline-
           source:
             resource:
               apiVersion: argoproj.io/v1alpha1
               kind: Workflow
               metadata:
-                name: flask-pipeline-template
+                generateName: flask-pipeline-
               spec:
                 serviceAccountName: argo-wf
                 entrypoint: main
