@@ -101,6 +101,9 @@ spec:
         eval "$( ssh-agent -s )"
         ssh-add /etc/ssh-key/ssh-private-key
 
+        pwd
+        ls -alt
+        
         yq -i e '.{{inputs.parameters.component}}.image = {{inputs.parameters.new_tag}}' ./argocd/apps/values.yaml
         cat ./argocd/apps/values.yaml
 
