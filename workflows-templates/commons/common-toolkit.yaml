@@ -19,7 +19,7 @@ spec:
       volumeMounts:
       command: [bash]
       source: |
-        echo "0.1.0"
+        echo "0.1.1"
 ##########################is-empty##########################
   - name: is-empty
     metadata:
