@@ -47,7 +47,7 @@ spec:
               value: "{{workflow.parameters.ssh_key_secret_name}}"
             - name: working_directory
               value: "{{workflow.parameters.working_directory}}"
-            withParam: '["{{workflow.parameters.git_repo}}","gitops-cluster"]'
+          withParam: '["{{workflow.parameters.git_repo}}","gitops-cluster"]'
         - name: pre-build
           templateRef:
             name: common-toolkit
