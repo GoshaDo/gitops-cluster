@@ -1,19 +1,17 @@
 repoUrl: https://github.com/GoshaDo/gitops-cluster
 flaskApp:
-  image: vtest-8
+  image: v0.1.6
   remoteOrigin: "https://github.com/GoshaDo/BestFW.git"
   remoteCommit: "HEAD"
 webapp:
   image: vtest-6
   remoteOrigin: "https://github.com/Rookout/tutorial-python.git"
   remoteCommit: "HEAD"
-
 # hostAliases:
 # - ip: "127.0.0.1"
 #   hostnames:
 #   - "controller.example"
 #   - "datastore.example"
-
 rookout:
   controller:
     host: "ws://rookout-controller.argocd.svc.cluster.local"
