@@ -73,7 +73,7 @@ spec:
               value: "{{workflow.parameters.working_directory}}"
             - name: new_tag
               value: "{{tasks.pre-build.outputs.result}}"
-            dependencies: 
-              - pre-build
+          dependencies: 
+            - pre-build
 
                         
