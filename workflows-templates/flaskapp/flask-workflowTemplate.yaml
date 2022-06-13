@@ -93,6 +93,6 @@ spec:
             - name: ssh_key_secret_name
               value: "{{workflow.parameters.ssh_key_secret_name}}"
           dependencies: 
-            - pre-build
+            - kniko-build-and-push
 
                         
