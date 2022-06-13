@@ -19,7 +19,24 @@ spec:
       volumeMounts:
       command: [bash]
       source: |
-        echo "0.1.1"
+        TAG_LIST=$(curl --silent https://registry.hub.docker.com/v1/repositories/{{workflow.parameters.container_registery}}/{{workflow.parameters.container_repo}}/tags)
+        TMP=$(echo $TAG_LIST | jq ".[0].name")
+
+        for row in $(echo $TAG_LIST | jq ".[].name") ; do
+          if [ $TMP > $row ]; then
+            TMP=$row
+          fi
+        done
+
+        regex="([0-9]+).([0-9]+).([0-9]+)"
+        if [[ $TMP =~ $regex ]]; then
+          major="${BASH_REMATCH[1]}"
+          minor="${BASH_REMATCH[2]}"
+          bug="${BASH_REMATCH[3]}"
+        fi
+
+        bug=$(echo $bug + 1 | bc)
+        echo "${major}.${minor}.${bug}"
 ##########################is-empty##########################
   - name: is-empty
     metadata:
@@ -103,7 +120,7 @@ spec:
 
         pwd
         ls -alt
-        
+
         yq -i e '.{{inputs.parameters.component}}.image = {{inputs.parameters.new_tag}}' ./argocd/apps/values.yaml
         cat ./argocd/apps/values.yaml
 
