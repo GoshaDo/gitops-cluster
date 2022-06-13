@@ -15,9 +15,9 @@ spec:
       - name: container_registery
       - name: container_repo
     script:
-      image: goshad/pretest:v0
+      image: goshad/pre-build:v0
       volumeMounts:
-      command: [sh]
+      command: [bash]
       source: |
         TAG_LIST=$(curl --silent https://registry.hub.docker.com/v1/repositories/{{workflow.parameters.container_registery}}/{{workflow.parameters.container_repo}}/tags)
         TMP=$(echo $RESPONSE | jq --raw-output ".[]")
