@@ -18,7 +18,7 @@ spec:
     - template:
         name: flask-pipeline
         argoWorkflow:
-          operation: submit-from
+          operation: submit
           metadata:
             generateName: flask-pipeline-
           source:
