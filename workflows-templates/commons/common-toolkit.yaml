@@ -95,7 +95,7 @@ spec:
         - name: '{{inputs.parameters.ssh_key_secret_name}}'
           mountPath: "/etc/ssh-key"
           readOnly: true
-      command: [bash]
+      command: [sh]
       source: |
         set -euo pipefail
         eval "$( ssh-agent -s )"
