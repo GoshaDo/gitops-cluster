@@ -42,3 +42,7 @@ spec:
             value: "{{ .Values.webapp.remoteOrigin }}"
           - name: ROOKOUT_COMMIT
             value: "{{ .Values.webapp.remoteCommit }}"
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
