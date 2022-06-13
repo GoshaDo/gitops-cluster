@@ -18,6 +18,9 @@ spec:
     - template:
         name: flask-pipeline
         argoWorkflow:
+          group: argoproj.io
+          version: v1alpha1
+          resource: Workflow
           operation: submit
           metadata:
             generateName: flask-pipeline-
@@ -27,6 +30,12 @@ spec:
               kind: Workflow
               metadata:
                 name: flask-pipeline-template
+              spec:
+                serviceAccountName: argo-wf
+                entrypoint: main
+                workflowTemplateRef:
+                  name: flask-pipeline-template
+                  clusterScope: true
               
               
               
