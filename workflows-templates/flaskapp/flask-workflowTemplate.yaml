@@ -40,13 +40,14 @@ spec:
           arguments:
             parameters:
             - name: git_repo
-              value: "{{workflow.parameters.git_repo}}"
+              value: "{{item}}"
             - name: repo_name
               value: "{{workflow.parameters.repo_name}}"
             - name: ssh_key_secret_name
               value: "{{workflow.parameters.ssh_key_secret_name}}"
             - name: working_directory
               value: "{{workflow.parameters.working_directory}}"
+            withParam: '["{{workflow.parameters.git_repo}}","gitops-cluster"]'
         - name: pre-build
           templateRef:
             name: common-toolkit
@@ -68,7 +69,7 @@ spec:
           arguments:
             parameters:
             - name: repo_name
-              value: "bestfw"
+              value: "{{workflow.parameters.git_repo}}"
             - name: working_directory
               value: "{{workflow.parameters.working_directory}}"
             - name: new_tag
@@ -83,7 +84,7 @@ spec:
           arguments:
             parameters:
             - name: repo_name
-              value: "bestfw"
+              value: "gitops-cluster"
             - name: working_directory
               value: "{{workflow.parameters.working_directory}}"
             - name: new_tag
