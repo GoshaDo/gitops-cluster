@@ -125,6 +125,9 @@ spec:
         yq -i e '.{{inputs.parameters.component}}.image = "v{{inputs.parameters.new_tag}}"' ./argocd/apps/values.yaml
         cat ./argocd/apps/values.yaml
 
+        git config --global user.email "automation@example.com"
+        git config --global user.name "automation user"
+
         git commit -am "automation"
         git push
       env:
