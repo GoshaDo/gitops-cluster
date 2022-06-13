@@ -75,5 +75,24 @@ spec:
               value: "{{tasks.pre-build.outputs.result}}"
           dependencies: 
             - pre-build
+        - name: gitops-deployment
+          templateRef:
+            name: common-toolkit
+            template: gitops-deployment
+            clusterScope: true
+          arguments:
+            parameters:
+            - name: repo_name
+              value: "bestfw"
+            - name: working_directory
+              value: "{{workflow.parameters.working_directory}}"
+            - name: new_tag
+              value: "{{tasks.pre-build.outputs.result}}"
+            - name: component
+              value: flaskApp
+            - name: ssh_key_secret_name
+              value: "{{workflow.parameters.ssh_key_secret_name}}"
+          dependencies: 
+            - pre-build
 
                         

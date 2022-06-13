@@ -85,6 +85,7 @@ spec:
       - name: repo_name
       - name: new_tag
       - name: component
+      - name: ssh_key_secret_name
     script:
       image: goshad/pre-build:v1
       workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/
