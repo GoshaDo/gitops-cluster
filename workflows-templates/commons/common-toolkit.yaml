@@ -19,23 +19,7 @@ spec:
       volumeMounts:
       command: [bash]
       source: |
-        TAG_LIST=$(curl --silent https://registry.hub.docker.com/v1/repositories/{{workflow.parameters.container_registery}}/{{workflow.parameters.container_repo}}/tags)
-        TMP=$(echo $RESPONSE | jq --raw-output ".[]")
-        _jq() {
-          echo ${1} | base64 --decode | jq --raw-output ${2}
-        }
-        for row in $(echo "${RESPONSE}" | jq -r '.[] | @base64'); do
-          TMP=$(_jq $row '.name' | awk -F '.' '{print $1}')          
-        done
-
-        regex="([0-9]+).([0-9]+).([0-9]+)"
-        if [[ $TMP =~ $regex ]]; then
-          major="${BASH_REMATCH[1]}"
-          minor="${BASH_REMATCH[2]}"
-          bug="${BASH_REMATCH[3]}"
-        fi
-        bug=$(echo $bug + 1 | bc)
-        echo "${major}.${minor}.${bug}"
+        echo "latest"
 ##########################is-empty##########################
   - name: is-empty
     metadata:
