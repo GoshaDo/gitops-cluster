@@ -5,4 +5,5 @@ RUN apk add  --no-cache\
     jq \
     curl \
     bc \
-    bash
+    bash \ 
+    yq

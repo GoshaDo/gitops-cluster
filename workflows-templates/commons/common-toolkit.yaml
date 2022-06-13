@@ -38,6 +38,7 @@ spec:
         mountPath: /{{inputs.parameters.working_directory}}
       command: [sh]
       source: |
+        set -euo pipefail
         NUM_FILES=$(ls -alt| wc -l| awk '{print $1-3}')
         echo $NUM_FILES
 ##########################kaniko-build-and-push##########################
@@ -72,3 +73,36 @@ spec:
             items:
               - key: .dockerconfigjson
                 path: config.json
+
+##########################gitops-deployment##########################
+  - name: gitops-deployment
+    metadata:
+      labels:
+        k8s-app: argo-workflows
+    inputs:
+      parameters:
+      - name: working_directory
+      - name: repo_name
+      - name: new_tag
+      - name: component
+    script:
+      image: goshad/pre-build:v1
+      workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/
+      volumeMounts:
+        - name: '{{inputs.parameters.working_directory}}'
+          mountPath: /{{inputs.parameters.working_directory}}
+        - name: '{{inputs.parameters.ssh_key_secret_name}}'
+          mountPath: "/etc/ssh-key"
+          readOnly: true
+      command: [bash]
+      source: |
+        set -euo pipefail
+        eval "$( ssh-agent -s )"
+        ssh-add /etc/ssh-key/ssh-private-key
+
+        yq -i e '.{{inputs.parameters.component}}.image = {{inputs.parameters.new_tag}}' ./argocd/apps/values.yaml
+        cat ./argocd/apps/values.yaml
+
+        git commit -am "automation"
+        git push
+        
