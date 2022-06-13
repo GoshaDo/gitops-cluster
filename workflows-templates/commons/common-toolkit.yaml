@@ -104,7 +104,7 @@ spec:
       - name: component
       - name: ssh_key_secret_name
     script:
-      image: goshad/post-build:v0
+      image: goshad/post-build:v1
       workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/
       volumeMounts:
         - name: '{{inputs.parameters.working_directory}}'
@@ -126,4 +126,7 @@ spec:
 
         git commit -am "automation"
         git push
+      env:
+      - name: GIT_SSH_COMMAND
+        value: ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
         
