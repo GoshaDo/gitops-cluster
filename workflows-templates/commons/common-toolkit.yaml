@@ -87,7 +87,7 @@ spec:
       - name: component
       - name: ssh_key_secret_name
     script:
-      image: goshad/pre-build:v1
+      image: goshad/post-build:v1=0
       workingDir: /{{inputs.parameters.working_directory}}/{{inputs.parameters.repo_name}}/
       volumeMounts:
         - name: '{{inputs.parameters.working_directory}}'
